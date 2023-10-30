@@ -11,8 +11,8 @@ User get _mockUser => User(
       createdAt: DateTime.now(),
     );
 
-class UserMockProvider {
-  UserMockProvider() {
+class UserMockApi {
+  UserMockApi() {
     _triggerNotLoggedIn();
   }
 

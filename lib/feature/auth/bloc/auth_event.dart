@@ -1,11 +1,15 @@
 part of 'auth_bloc.dart';
 
 sealed class AuthEvent {
-  AuthEvent();
+  const AuthEvent();
+}
+
+class AppStarted extends AuthEvent {
+  const AppStarted();
 }
 
 class SignUpWithEmailAndPassword extends AuthEvent {
-  SignUpWithEmailAndPassword({
+  const SignUpWithEmailAndPassword({
     required this.email,
     required this.password,
   });
@@ -13,12 +17,17 @@ class SignUpWithEmailAndPassword extends AuthEvent {
   final String email;
   final String password;
 }
+
 class SignInWithEmailAndPassword extends AuthEvent {
-  SignInWithEmailAndPassword({
+  const SignInWithEmailAndPassword({
     required this.email,
     required this.password,
   });
 
   final String email;
   final String password;
+}
+
+class LogOut extends AuthEvent {
+  const LogOut();
 }

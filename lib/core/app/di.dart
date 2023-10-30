@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:scalable_flutter_app_starter/feature/auth/bloc/auth_bloc.dart';
 import 'package:scalable_flutter_app_starter/feature/auth/repository/auth_repository.dart';
-import 'package:scalable_flutter_app_starter/feature/user/bloc/user_cubit.dart';
 import 'package:scalable_flutter_app_starter/feature/user/provider/user_mock_provider.dart';
 import 'package:scalable_flutter_app_starter/feature/user/repository/user_repository.dart';
 
@@ -15,7 +15,7 @@ class DI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _ProviderDI(
+    return _ApiDI(
       child: _RepositoryDI(
         child: _BlocDI(
           child: child,
@@ -25,8 +25,8 @@ class DI extends StatelessWidget {
   }
 }
 
-class _ProviderDI extends StatelessWidget {
-  const _ProviderDI({required this.child});
+class _ApiDI extends StatelessWidget {
+  const _ApiDI({required this.child});
 
   final Widget child;
 
@@ -34,8 +34,8 @@ class _ProviderDI extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<UserMockProvider>(
-          create: (context) => UserMockProvider(),
+        RepositoryProvider<UserMockApi>(
+          create: (context) => UserMockApi(),
         ),
       ],
       child: child,
@@ -54,12 +54,12 @@ class _RepositoryDI extends StatelessWidget {
       providers: [
         RepositoryProvider<UserRepository>(
           create: (context) => UserRepository(
-            userProvider: context.read<UserMockProvider>(),
+            userProvider: context.read<UserMockApi>(),
           ),
         ),
         RepositoryProvider<AuthRepository>(
           create: (context) => AuthRepository(
-            userProvider: context.read<UserMockProvider>(),
+            userProvider: context.read<UserMockApi>(),
           ),
         ),
       ],
@@ -77,10 +77,11 @@ class _BlocDI extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<UserCubit>(
-          create: (context) => UserCubit(
+        BlocProvider<AuthBloc>(
+          create: (context) => AuthBloc(
             userRepository: context.read<UserRepository>(),
-          ),
+            authRepository: context.read<AuthRepository>(),
+          )..add(const AppStarted()),
         ),
       ],
       child: child,

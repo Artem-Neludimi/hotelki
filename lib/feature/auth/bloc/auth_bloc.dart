@@ -9,20 +9,41 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> with BlocLoggy {
+  final AuthRepository _authRepository;
+  final UserRepository _userRepository;
+
   AuthBloc({
-    required this.authRepository,
-    required this.userRepository,
-  }) : super(const AuthInitial()) {
+    required AuthRepository authRepository,
+    required UserRepository userRepository,
+  })  : _userRepository = userRepository,
+        _authRepository = authRepository,
+        super(const AuthInitial()) {
     on<AuthEvent>(
       (event, emit) => switch (event) {
+        AppStarted() => _onAppStarted(event, emit),
         SignUpWithEmailAndPassword() => _onSignUpWithEmailAndPassword(event, emit),
         SignInWithEmailAndPassword() => _signInWithEmailAndPassword(event, emit),
+        LogOut() => _onLogOut(event, emit),
       },
     );
   }
 
-  final AuthRepository authRepository;
-  final UserRepository userRepository;
+  Future<void> _onAppStarted(AppStarted event, Emitter<AuthState> emit) async {
+    emit(const AuthLoading());
+
+    try {
+      const User? user = null;
+
+      if (user == null) {
+        emit(const AuthUnauthorize());
+      } else {
+        emit(AuthAuthorize(user: user));
+      }
+    } catch (e, s) {
+      loggy.error('appStarted error', e, s);
+      emit(AuthFailure(errorMessage: e.toString()));
+    }
+  }
 
   Future<void> _onSignUpWithEmailAndPassword(
     SignUpWithEmailAndPassword event,
@@ -31,12 +52,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with BlocLoggy {
     emit(const AuthLoading());
 
     try {
-      final user = await authRepository.signUpWithEmailAndPassword(
+      final user = await _authRepository.signUpWithEmailAndPassword(
         email: event.email,
         password: event.password,
       );
 
-      emit(AuthSuccess(user: user));
+      emit(AuthAuthorize(user: user!));
     } catch (e, s) {
       loggy.error('signUpWithEmailAndPassword error', e, s);
       emit(AuthFailure(errorMessage: e.toString()));
@@ -46,14 +67,25 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with BlocLoggy {
   Future<void> _signInWithEmailAndPassword(SignInWithEmailAndPassword event, Emitter<AuthState> emit) async {
     emit(const AuthLoading());
     try {
-      final user = await authRepository.signInWithEmailAndPassword(
+      final user = await _authRepository.signInWithEmailAndPassword(
         email: event.email,
         password: event.password,
       );
 
-      emit(AuthSuccess(user: user));
+      emit(AuthAuthorize(user: user!));
     } catch (e, s) {
       loggy.error('signInWithEmailAndPassword error', e, s);
+      emit(AuthFailure(errorMessage: e.toString()));
+    }
+  }
+
+  Future<void> _onLogOut(LogOut event, Emitter<AuthState> emit) async {
+    emit(const AuthLoading());
+    try {
+      _userRepository.logOut();
+      emit(const AuthInitial());
+    } catch (e, s) {
+      loggy.error('logOut error', e, s);
       emit(AuthFailure(errorMessage: e.toString()));
     }
   }

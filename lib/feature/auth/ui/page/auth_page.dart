@@ -8,14 +8,14 @@ import 'package:scalable_flutter_app_starter/core/ui/widget/loading_overlay.dart
 import 'package:scalable_flutter_app_starter/core/ui/widget/responsive.dart';
 import 'package:scalable_flutter_app_starter/feature/auth/bloc/auth_bloc.dart';
 
-class AuthPage extends StatefulWidget {
-  const AuthPage({super.key});
+class AccountPage extends StatefulWidget {
+  const AccountPage({super.key});
 
   @override
-  State<AuthPage> createState() => _AuthPageState();
+  State<AccountPage> createState() => _AccountPageState();
 }
 
-class _AuthPageState extends State<AuthPage> {
+class _AccountPageState extends State<AccountPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -88,10 +88,10 @@ class _AuthPageState extends State<AuthPage> {
       return;
     }
 
-    if (state is AuthSuccess) {
-      if (state.user != null) {
-        AppRoute.home.go(context);
-      }
+    if (state is AuthAuthorize) {
+      // if (state.user != null) {
+      AppRoute.home.go(context);
+      // }
     }
   }
 

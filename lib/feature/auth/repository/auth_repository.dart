@@ -6,7 +6,7 @@ class AuthRepository {
     required this.userProvider,
   });
 
-  final UserMockProvider userProvider;
+  final UserMockApi userProvider;
 
   Future<User?> signUpWithEmailAndPassword({
     required String email,

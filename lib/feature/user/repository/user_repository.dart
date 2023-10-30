@@ -6,7 +6,7 @@ class UserRepository {
     required this.userProvider,
   });
 
-  final UserMockProvider userProvider;
+  final UserMockApi userProvider;
 
   Stream<User?> getUserStream() {
     return userProvider.getUserStream();
