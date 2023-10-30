@@ -13,7 +13,7 @@ User get _mockUser => User(
 
 class UserMockProvider {
   UserMockProvider() {
-    triggerNotLoggedIn();
+    _triggerNotLoggedIn();
   }
 
   final _userStream = StreamController<User?>.broadcast();
@@ -28,7 +28,7 @@ class UserMockProvider {
     return user;
   }
 
-  Future<void> triggerNotLoggedIn() async {
+  Future<void> _triggerNotLoggedIn() async {
     await _networkDelay();
     _userStream.add(null);
   }

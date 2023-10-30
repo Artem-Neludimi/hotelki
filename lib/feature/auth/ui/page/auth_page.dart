@@ -6,7 +6,7 @@ import 'package:scalable_flutter_app_starter/core/ui/input/input_field.dart';
 import 'package:scalable_flutter_app_starter/core/ui/widget/labeled_text_button.dart';
 import 'package:scalable_flutter_app_starter/core/ui/widget/loading_overlay.dart';
 import 'package:scalable_flutter_app_starter/core/ui/widget/responsive.dart';
-import 'package:scalable_flutter_app_starter/feature/auth/bloc/auth_cubit.dart';
+import 'package:scalable_flutter_app_starter/feature/auth/bloc/auth_bloc.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -24,7 +24,7 @@ class _AuthPageState extends State<AuthPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthCubit, AuthState>(
+    return BlocConsumer<AuthBloc, AuthState>(
       listener: _onAuthState,
       builder: (context, state) {
         return LoadingOverlay(
@@ -42,9 +42,7 @@ class _AuthPageState extends State<AuthPage> {
                       children: [
                         const Spacer(),
                         Text(
-                          _isSignUp
-                              ? 'Sign up to continue'
-                              : 'Sign in to continue',
+                          _isSignUp ? 'Sign up to continue' : 'Sign in to continue',
                           style: context.textTheme.titleLarge,
                         ),
                         const SizedBox(height: 16),
@@ -64,9 +62,7 @@ class _AuthPageState extends State<AuthPage> {
                         ),
                         const SizedBox(height: 8),
                         LabeledTextButton(
-                          label: _isSignUp
-                              ? 'Already have an account?'
-                              : 'Don’t have an account?',
+                          label: _isSignUp ? 'Already have an account?' : 'Don’t have an account?',
                           action: _isSignUp ? 'Sign in' : 'Sign up',
                           onTap: () => setState(() => _isSignUp = !_isSignUp),
                         ),
@@ -110,15 +106,9 @@ class _AuthPageState extends State<AuthPage> {
     final password = _passwordController.text.trim();
 
     if (_isSignUp) {
-      context.read<AuthCubit>().signUpWithEmailAndPassword(
-            email: email,
-            password: password,
-          );
+      context.read<AuthBloc>().add(SignUpWithEmailAndPassword(email: email, password: password));
     } else {
-      context.read<AuthCubit>().signInWithEmailAndPassword(
-            email: email,
-            password: password,
-          );
+      context.read<AuthBloc>().add(SignInWithEmailAndPassword(email: email, password: password));
     }
   }
 }

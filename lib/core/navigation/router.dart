@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:scalable_flutter_app_starter/core/navigation/route.dart';
-import 'package:scalable_flutter_app_starter/feature/auth/bloc/auth_cubit.dart';
+import 'package:scalable_flutter_app_starter/feature/auth/bloc/auth_bloc.dart';
 import 'package:scalable_flutter_app_starter/feature/auth/repository/auth_repository.dart';
 import 'package:scalable_flutter_app_starter/feature/auth/ui/page/auth_page.dart';
 import 'package:scalable_flutter_app_starter/feature/auth/ui/page/splash_page.dart';
@@ -27,7 +27,7 @@ final GoRouter router = GoRouter(
       path: AppRoute.auth.path,
       builder: (context, state) {
         return BlocProvider(
-          create: (context) => AuthCubit(
+          create: (context) => AuthBloc(
             userRepository: context.read<UserRepository>(),
             authRepository: context.read<AuthRepository>(),
           ),

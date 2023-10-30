@@ -5,27 +5,35 @@ import 'package:scalable_flutter_app_starter/feature/auth/repository/auth_reposi
 import 'package:scalable_flutter_app_starter/feature/user/model/user.dart';
 import 'package:scalable_flutter_app_starter/feature/user/repository/user_repository.dart';
 
+part 'auth_event.dart';
 part 'auth_state.dart';
 
-class AuthCubit extends Cubit<AuthState> with BlocLoggy {
-  AuthCubit({
+class AuthBloc extends Bloc<AuthEvent, AuthState> with BlocLoggy {
+  AuthBloc({
     required this.authRepository,
     required this.userRepository,
-  }) : super(const AuthInitial());
+  }) : super(const AuthInitial()) {
+    on<AuthEvent>(
+      (event, emit) => switch (event) {
+        SignUpWithEmailAndPassword() => _onSignUpWithEmailAndPassword(event, emit),
+        SignInWithEmailAndPassword() => _signInWithEmailAndPassword(event, emit),
+      },
+    );
+  }
 
   final AuthRepository authRepository;
   final UserRepository userRepository;
 
-  Future<void> signUpWithEmailAndPassword({
-    required String email,
-    required String password,
-  }) async {
+  Future<void> _onSignUpWithEmailAndPassword(
+    SignUpWithEmailAndPassword event,
+    Emitter<AuthState> emit,
+  ) async {
     emit(const AuthLoading());
 
     try {
       final user = await authRepository.signUpWithEmailAndPassword(
-        email: email,
-        password: password,
+        email: event.email,
+        password: event.password,
       );
 
       emit(AuthSuccess(user: user));
@@ -35,15 +43,12 @@ class AuthCubit extends Cubit<AuthState> with BlocLoggy {
     }
   }
 
-  Future<void> signInWithEmailAndPassword({
-    required String email,
-    required String password,
-  }) async {
+  Future<void> _signInWithEmailAndPassword(SignInWithEmailAndPassword event, Emitter<AuthState> emit) async {
     emit(const AuthLoading());
     try {
       final user = await authRepository.signInWithEmailAndPassword(
-        email: email,
-        password: password,
+        email: event.email,
+        password: event.password,
       );
 
       emit(AuthSuccess(user: user));
