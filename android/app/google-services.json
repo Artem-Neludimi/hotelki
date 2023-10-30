@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "533368436349",
+    "project_id": "hotelki",
+    "storage_bucket": "hotelki.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533368436349:android:a42f8195373e54e43b6314",
+        "android_client_info": {
+          "package_name": "com.gradoid.scalable_flutter_app_starter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwFGT-TgUgLiSqg_JNxB5RUOduOqAVIsc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
