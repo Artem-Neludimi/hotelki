@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scalable_flutter_app_starter/core/extension/context.dart';
 import 'package:scalable_flutter_app_starter/core/navigation/route.dart';
-import 'package:scalable_flutter_app_starter/feature/auth/bloc/auth_bloc.dart';
+
+import '../../logic/bloc/auth_bloc.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
@@ -25,7 +26,7 @@ class SplashPage extends StatelessWidget {
 
   void _onUserState(BuildContext context, AuthState userState) {
     if (userState is! AuthUnauthorize) {
-      AppRoute.home.go(context);
+      AppRoute.auth.go(context);
     }
     if (userState is AuthUnauthorize) {
       AppRoute.home.go(context);

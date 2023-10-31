@@ -6,7 +6,7 @@ import 'package:scalable_flutter_app_starter/core/ui/input/input_field.dart';
 import 'package:scalable_flutter_app_starter/core/ui/widget/labeled_text_button.dart';
 import 'package:scalable_flutter_app_starter/core/ui/widget/loading_overlay.dart';
 import 'package:scalable_flutter_app_starter/core/ui/widget/responsive.dart';
-import 'package:scalable_flutter_app_starter/feature/auth/bloc/auth_bloc.dart';
+import 'package:scalable_flutter_app_starter/feature/auth/logic/bloc/auth_bloc.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});

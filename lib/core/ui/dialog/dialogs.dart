@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scalable_flutter_app_starter/core/extension/context.dart';
 import 'package:scalable_flutter_app_starter/core/navigation/route.dart';
 import 'package:scalable_flutter_app_starter/core/ui/dialog/confirmation_dialog.dart';
-import 'package:scalable_flutter_app_starter/feature/auth/bloc/auth_bloc.dart';
+
+import '../../../feature/auth/logic/bloc/auth_bloc.dart';
 
 sealed class Dialogs {
   const Dialogs._();

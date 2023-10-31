@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:scalable_flutter_app_starter/feature/auth/bloc/auth_bloc.dart';
 import 'package:scalable_flutter_app_starter/feature/auth/repository/auth_repository.dart';
 import 'package:scalable_flutter_app_starter/feature/user/provider/user_mock_provider.dart';
 import 'package:scalable_flutter_app_starter/feature/user/repository/user_repository.dart';
 
+import '../../feature/auth/logic/bloc/auth_bloc.dart';
 import '../../feature/user/bloc/user_cubit.dart';
 
 class DI extends StatelessWidget {
