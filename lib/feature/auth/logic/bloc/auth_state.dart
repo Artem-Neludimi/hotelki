@@ -2,7 +2,7 @@ part of 'auth_bloc.dart';
 
 @immutable
 sealed class AuthState {
-  final User? user;
+  final String? user;
   const AuthState(this.user);
 }
 
@@ -15,7 +15,7 @@ class AuthLoading extends AuthState {
 }
 
 class AuthAuthorize extends AuthState {
-  const AuthAuthorize({required User? user}) : super(user);
+  const AuthAuthorize({required String? authEmail}) : super(authEmail);
 }
 
 class AuthUnauthorize extends AuthState {

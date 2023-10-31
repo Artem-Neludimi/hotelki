@@ -4,7 +4,11 @@ import 'package:scalable_flutter_app_starter/core/logger/loggy_types.dart';
 import '../../storage/local_storage_service.dart';
 
 abstract interface class _FirebaseAuthService {
-  Future<void> signInWithEmailAndPassword();
+  Future<String?> signInWithEmailAndPassword({required String email, required String password});
+
+  Future<String?> createUserWithEmailAndPassword({required String email, required String password});
+
+  Future<String?> signInWithToken();
 
   Future<void> signOut();
 
@@ -12,34 +16,55 @@ abstract interface class _FirebaseAuthService {
 }
 
 class FirebaseAuthService with ApiLoggy implements _FirebaseAuthService {
-  final LocalStorageService localStorageService;
+  final LocalStorageService _localStorageService;
 
-  FirebaseAuthService(this.localStorageService);
+  FirebaseAuthService(this._localStorageService);
+
+  final _auth = FirebaseAuth.instance;
+  User? get user => _auth.currentUser;
+  Stream<User?> get authStateChanges => _auth.authStateChanges();
+
   @override
-  Future<void> signInWithEmailAndPassword() async {
+  Future<String?> signInWithEmailAndPassword({required String email, required String password}) async {
     try {
-      if (isSignedIn) {
-        loggy.info({
-          'message': 'User already signed in',
-        });
-        return;
-      }
-      final credentials = await FirebaseAuth.instance.signInAnonymously();
-      final user = credentials.user;
-      loggy.info({
-        'uid': user?.uid,
-        'isAnonymous': user?.isAnonymous,
-        'phoneNumber': user?.phoneNumber,
-      });
+      final userCredential = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      return userCredential.user?.email;
     } catch (e, s) {
       loggy.error(e, s);
+      return null;
+    }
+  }
+
+  @override
+  Future<String?> createUserWithEmailAndPassword({required String email, required String password}) async {
+    try {
+      final userCredential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      await _localStorageService.saveToken(userCredential.credential!.token!);
+      return userCredential.user?.email;
+    } catch (e, s) {
+      loggy.error(e, s);
+      return null;
+    }
+  }
+
+  @override
+  Future<String?> signInWithToken() async {
+    final token = _localStorageService.getToken;
+    if (token == null) return null;
+    try {
+      final userCredential = await _auth.signInWithCustomToken(token);
+      return userCredential.user?.email;
+    } catch (e, s) {
+      loggy.error(e, s);
+      return null;
     }
   }
 
   @override
   Future<void> signOut() async {
     try {
-      await FirebaseAuth.instance.signOut();
+      await _auth.signOut();
+      await _localStorageService.clearToken();
     } catch (e, s) {
       loggy.error(e, s);
     }
@@ -47,7 +72,7 @@ class FirebaseAuthService with ApiLoggy implements _FirebaseAuthService {
 
   @override
   bool get isSignedIn {
-    final user = FirebaseAuth.instance.currentUser;
+    final user = _auth.currentUser;
     return user != null;
   }
 }

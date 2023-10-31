@@ -5,11 +5,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 part 'storage_keys.dart';
 
 abstract interface class _LocalStorageService implements BaseInitService {
-  String get jwtToken;
+  Future<void> saveToken(int token);
+  Future<void> clearToken();
+  String? get getToken;
 }
 
 class LocalStorageService with ApiLoggy implements _LocalStorageService {
-  late SharedPreferences _preferences;
+  SharedPreferences? _preferences;
 
   @override
   Future<void> init() async {
@@ -17,5 +19,15 @@ class LocalStorageService with ApiLoggy implements _LocalStorageService {
   }
 
   @override
-  String get jwtToken => _preferences.getString(StorageKeys.accessToken) ?? '';
+  Future<void> saveToken(int token) async {
+    await _preferences!.setInt(StorageKeys.accessToken, token);
+  }
+
+  @override
+  Future<void> clearToken() async {
+    await _preferences!.remove(StorageKeys.accessToken);
+  }
+
+  @override
+  String? get getToken => _preferences!.getString(StorageKeys.accessToken);
 }

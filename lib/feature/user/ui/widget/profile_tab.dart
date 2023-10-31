@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scalable_flutter_app_starter/core/extension/context.dart';
-import 'package:scalable_flutter_app_starter/core/extension/context_user.dart';
 import 'package:scalable_flutter_app_starter/core/navigation/route.dart';
 import 'package:scalable_flutter_app_starter/feature/user/ui/widget/user_image.dart';
+
+import '../../bloc/user_cubit.dart';
 
 class ProfileTab extends StatelessWidget {
   const ProfileTab({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final user = context.watchCurrentUser;
+    final user = context.select((UserCubit cubit) => cubit.userEmail);
     if (user == null) {
       return Center(
         child: ElevatedButton(
@@ -31,16 +33,16 @@ class ProfileTab extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            UserImage.medium(user.imageUrl),
+            UserImage.medium(user),
             const SizedBox(height: 16),
             Text(
-              user.name,
+              user,
               textAlign: TextAlign.center,
               style: context.textTheme.titleMedium,
             ),
             const SizedBox(height: 4),
             Text(
-              user.email,
+              user,
               textAlign: TextAlign.center,
               style: context.textTheme.bodyLarge,
             ),

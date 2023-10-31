@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:scalable_flutter_app_starter/core/services/firebase/auth/firebase_auth_service.dart';
+import 'package:scalable_flutter_app_starter/core/services/storage/local_storage_service.dart';
 import 'package:scalable_flutter_app_starter/feature/auth/data/auth_repository.dart';
 import 'package:scalable_flutter_app_starter/feature/user/provider/user_mock_provider.dart';
 import 'package:scalable_flutter_app_starter/feature/user/repository/user_repository.dart';
@@ -54,6 +56,14 @@ class _RepositoryDI extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
+        RepositoryProvider<LocalStorageService>(
+          create: (context) => LocalStorageService()..init(),
+        ),
+        RepositoryProvider<FirebaseAuthService>(
+          create: (context) => FirebaseAuthService(
+            context.read<LocalStorageService>(),
+          ),
+        ),
         RepositoryProvider<UserRepository>(
           create: (context) => UserRepository(
             userProvider: context.read<UserMockApi>(),
@@ -61,7 +71,7 @@ class _RepositoryDI extends StatelessWidget {
         ),
         RepositoryProvider<AuthRepository>(
           create: (context) => AuthRepository(
-            userProvider: context.read<UserMockApi>(),
+            context.read<FirebaseAuthService>(),
           ),
         ),
       ],
@@ -81,7 +91,6 @@ class _BlocDI extends StatelessWidget {
       providers: [
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(
-            context.read<UserRepository>(),
             context.read<AuthRepository>(),
           )..add(const AppStarted()),
         ),
@@ -100,7 +109,7 @@ class AuthorizedRouterDI extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => UserCubit(
-        user: context.read<AuthBloc>().state.user,
+        userEmail: context.read<AuthBloc>().state.user,
       ),
       child: child,
     );
