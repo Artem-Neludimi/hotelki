@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scalable_flutter_app_starter/core/extension/context.dart';
 import 'package:scalable_flutter_app_starter/core/navigation/route.dart';
 
-import '../../logic/bloc/auth_bloc.dart';
+import '../auth/logic/bloc/auth_bloc.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
@@ -11,7 +11,7 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
-      listener: _onUserState,
+      listener: _onAuthState,
       child: Scaffold(
         body: Center(
           child: Text(
@@ -24,12 +24,10 @@ class SplashPage extends StatelessWidget {
     );
   }
 
-  void _onUserState(BuildContext context, AuthState userState) {
-    if (userState is! AuthUnauthorize) {
-      AppRoute.auth.go(context);
-    }
-    if (userState is AuthUnauthorize) {
-      AppRoute.home.go(context);
-    }
+  void _onAuthState(BuildContext context, AuthState authState) async {
+    if (authState is AuthLoading) return;
+
+    if (authState is AuthAuthorize) AppRoute.home.go(context);
+    if (authState is AuthUnauthorize) AppRoute.auth.go(context);
   }
 }

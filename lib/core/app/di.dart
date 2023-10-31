@@ -81,8 +81,8 @@ class _BlocDI extends StatelessWidget {
       providers: [
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(
-            userRepository: context.read<UserRepository>(),
-            authRepository: context.read<AuthRepository>(),
+            context.read<UserRepository>(),
+            context.read<AuthRepository>(),
           )..add(const AppStarted()),
         ),
       ],
@@ -104,5 +104,16 @@ class AuthorizedRouterDI extends StatelessWidget {
       ),
       child: child,
     );
+  }
+}
+
+class UnauthorizedRouterDI extends StatelessWidget {
+  const UnauthorizedRouterDI({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return child;
   }
 }

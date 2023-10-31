@@ -8,14 +8,14 @@ import 'package:scalable_flutter_app_starter/core/ui/widget/loading_overlay.dart
 import 'package:scalable_flutter_app_starter/core/ui/widget/responsive.dart';
 import 'package:scalable_flutter_app_starter/feature/auth/logic/bloc/auth_bloc.dart';
 
-class AuthPage extends StatefulWidget {
-  const AuthPage({super.key});
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
 
   @override
-  State<AuthPage> createState() => _AuthPageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _AuthPageState extends State<AuthPage> {
+class _ProfilePageState extends State<ProfilePage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -62,7 +62,7 @@ class _AuthPageState extends State<AuthPage> {
                         ),
                         const SizedBox(height: 8),
                         LabeledTextButton(
-                          label: _isSignUp ? 'Already have an account?' : 'Don\'t have an account?',
+                          label: _isSignUp ? 'Already have an account?' : 'Don’t have an account?',
                           action: _isSignUp ? 'Sign in' : 'Sign up',
                           onTap: () => setState(() => _isSignUp = !_isSignUp),
                         ),

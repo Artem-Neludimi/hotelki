@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:scalable_flutter_app_starter/core/navigation/route.dart';
 import 'package:scalable_flutter_app_starter/feature/auth/ui/page/auth_page.dart';
-import 'package:scalable_flutter_app_starter/feature/auth/ui/page/splash_page.dart';
+import 'package:scalable_flutter_app_starter/feature/splash/splash_page.dart';
 import 'package:scalable_flutter_app_starter/feature/home/ui/page/home_page.dart';
+import 'package:scalable_flutter_app_starter/feature/profile/ui/page/profile_page.dart';
 import 'package:scalable_flutter_app_starter/feature/settings/ui/page/settings_page.dart';
 
 import '../app/di.dart';
@@ -22,11 +23,12 @@ final GoRouter router = GoRouter(
     ),
     ShellRoute(
       navigatorKey: _unauthorizedRouterKey,
+      builder: (context, state, child) => UnauthorizedRouterDI(child: child),
       routes: [
         GoRoute(
           parentNavigatorKey: _unauthorizedRouterKey,
           path: AppRoute.auth.path,
-          builder: (context, state) => const AccountPage(),
+          builder: (context, state) => const AuthPage(),
         ),
       ],
     ),
@@ -46,8 +48,8 @@ final GoRouter router = GoRouter(
         ),
         GoRoute(
           parentNavigatorKey: _authorizedRouterKey,
-          path: AppRoute.account.path,
-          builder: (context, state) => const AccountPage(),
+          path: AppRoute.profile.path,
+          builder: (context, state) => const ProfilePage(),
         ),
       ],
     ),

@@ -12,12 +12,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with BlocLoggy {
   final AuthRepository _authRepository;
   final UserRepository _userRepository;
 
-  AuthBloc({
-    required AuthRepository authRepository,
-    required UserRepository userRepository,
-  })  : _userRepository = userRepository,
-        _authRepository = authRepository,
-        super(const AuthInitial()) {
+  AuthBloc(
+    this._userRepository,
+    this._authRepository,
+  ) : super(const AuthInitial()) {
     on<AuthEvent>(
       (event, emit) => switch (event) {
         AppStarted() => _onAppStarted(event, emit),

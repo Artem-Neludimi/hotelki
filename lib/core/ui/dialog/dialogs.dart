@@ -39,7 +39,7 @@ sealed class Dialogs {
     );
 
     if (confirmed && context.mounted) {
-      context.read<AuthBloc>().add(LogOut());
+      context.read<AuthBloc>().add(const LogOut());
       AppRoute.home.go(context);
     }
   }
