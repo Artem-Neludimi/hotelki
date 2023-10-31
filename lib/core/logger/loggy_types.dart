@@ -21,8 +21,8 @@ mixin RepositoryLoggy implements LoggyType {
       Loggy<RepositoryLoggy>('REPOSITORY: $runtimeType');
 }
 
-mixin ProviderLoggy implements LoggyType {
+mixin ApiLoggy implements LoggyType {
   @override
-  Loggy<ProviderLoggy> get loggy =>
-      Loggy<ProviderLoggy>('PROVIDER: $runtimeType');
+  Loggy<ApiLoggy> get loggy =>
+      Loggy<ApiLoggy>('API: $runtimeType');
 }

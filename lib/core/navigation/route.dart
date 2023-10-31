@@ -17,5 +17,5 @@ enum AppRoute {
 extension AppRouteNavigation on AppRoute {
   void go(BuildContext context) => context.go(path);
 
-  void push(BuildContext context) => context.push(path);
+  Future<T?> push<T>(BuildContext context) => context.push<T>(path);
 }

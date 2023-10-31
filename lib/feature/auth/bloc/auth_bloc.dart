@@ -37,7 +37,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with BlocLoggy {
       if (user == null) {
         emit(const AuthUnauthorize());
       } else {
-        emit(AuthAuthorize(user: user));
+        emit(const AuthAuthorize(user: user));
       }
     } catch (e, s) {
       loggy.error('appStarted error', e, s);

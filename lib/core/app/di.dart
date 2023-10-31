@@ -5,6 +5,8 @@ import 'package:scalable_flutter_app_starter/feature/auth/repository/auth_reposi
 import 'package:scalable_flutter_app_starter/feature/user/provider/user_mock_provider.dart';
 import 'package:scalable_flutter_app_starter/feature/user/repository/user_repository.dart';
 
+import '../../feature/user/bloc/user_cubit.dart';
+
 class DI extends StatelessWidget {
   const DI({
     required this.child,
@@ -84,6 +86,22 @@ class _BlocDI extends StatelessWidget {
           )..add(const AppStarted()),
         ),
       ],
+      child: child,
+    );
+  }
+}
+
+class AuthorizedRouterDI extends StatelessWidget {
+  const AuthorizedRouterDI({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => UserCubit(
+        user: context.read<AuthBloc>().state.user,
+      ),
       child: child,
     );
   }
