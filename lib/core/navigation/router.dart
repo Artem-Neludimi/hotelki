@@ -40,7 +40,7 @@ final GoRouter router = GoRouter(
         GoRoute(
           parentNavigatorKey: _authorizedRouterKey,
           path: AppRoute.home.path,
-          builder: (context, state) => const HomePage(),
+          builder: (context, state) => const HomeProvider(child: HomePage()),
         ),
         GoRoute(
           parentNavigatorKey: _authorizedRouterKey,
