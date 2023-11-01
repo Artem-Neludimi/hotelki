@@ -150,7 +150,7 @@ ThemeData _getTheme() {
       ),
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: colorScheme.secondary,
+      backgroundColor: colorScheme.onSecondary,
       foregroundColor: Colors.white,
       iconSize: 24,
       shape: RoundedRectangleBorder(

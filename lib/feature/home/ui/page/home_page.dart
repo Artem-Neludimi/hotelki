@@ -76,7 +76,6 @@ class _HomePageState extends State<HomePage> {
       body: body,
       bottomNavigationBar: bottomNavigationBar,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: context.colorScheme.onSecondary,
         onPressed: () => AppRoute.creatingHotelka.push(context),
         child: const Icon(Icons.add),
       ),
