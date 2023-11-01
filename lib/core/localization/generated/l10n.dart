@@ -70,6 +70,16 @@ class S {
     );
   }
 
+  /// `Creating Hotelka`
+  String get creatingHotelka {
+    return Intl.message(
+      'Creating Hotelka',
+      name: 'creatingHotelka',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Create Hotelka`
   String get createHotelka {
     return Intl.message(
@@ -80,11 +90,131 @@ class S {
     );
   }
 
-  /// `Creating Hotelka`
-  String get creatingHotelka {
+  /// `Название`
+  String get name {
     return Intl.message(
-      'Creating Hotelka',
-      name: 'creatingHotelka',
+      'Название',
+      name: 'name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Описание`
+  String get description {
+    return Intl.message(
+      'Описание',
+      name: 'description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Рeференсы`
+  String get references {
+    return Intl.message(
+      'Рeференсы',
+      name: 'references',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Важно`
+  String get important {
+    return Intl.message(
+      'Важно',
+      name: 'important',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ставьте галочку только если эта хотелка критически важна`
+  String get importantDescription {
+    return Intl.message(
+      'Ставьте галочку только если эта хотелка критически важна',
+      name: 'importantDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Категория`
+  String get category {
+    return Intl.message(
+      'Категория',
+      name: 'category',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Фильмы`
+  String get movies {
+    return Intl.message(
+      'Фильмы',
+      name: 'movies',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Цветы`
+  String get flowers {
+    return Intl.message(
+      'Цветы',
+      name: 'flowers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Свидания`
+  String get dates {
+    return Intl.message(
+      'Свидания',
+      name: 'dates',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Подарки`
+  String get presents {
+    return Intl.message(
+      'Подарки',
+      name: 'presents',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Букет роз`
+  String get bouquetOfRose {
+    return Intl.message(
+      'Букет роз',
+      name: 'bouquetOfRose',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Видела в магазине у дома офигенный букет`
+  String get bouquetDescription {
+    return Intl.message(
+      'Видела в магазине у дома офигенный букет',
+      name: 'bouquetDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ссылка на место`
+  String get placeLink {
+    return Intl.message(
+      'Ссылка на место',
+      name: 'placeLink',
       desc: '',
       args: [],
     );

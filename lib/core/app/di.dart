@@ -9,7 +9,6 @@ import 'package:scalable_flutter_app_starter/feature/user/provider/user_mock_pro
 import 'package:scalable_flutter_app_starter/feature/user/repository/user_repository.dart';
 
 import '../../feature/auth/logic/bloc/auth_bloc.dart';
-import '../../feature/user/bloc/user_cubit.dart';
 
 class DI extends StatelessWidget {
   const DI({
@@ -106,29 +105,3 @@ class _BlocDI extends StatelessWidget {
   }
 }
 
-class AuthorizedRouterDI extends StatelessWidget {
-  const AuthorizedRouterDI({super.key, required this.child});
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => UserCubit(
-        userEmail: context.read<AuthBloc>().state.user,
-      ),
-      child: child,
-    );
-  }
-}
-
-class UnauthorizedRouterDI extends StatelessWidget {
-  const UnauthorizedRouterDI({super.key, required this.child});
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return child;
-  }
-}

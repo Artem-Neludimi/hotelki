@@ -11,6 +11,7 @@ const _darkest = Colors.black;
 const _darker = Colors.black87;
 const _divider = Colors.grey;
 const _disabled = Colors.grey;
+const _hint = Colors.grey;
 
 const _red = Colors.red;
 
@@ -142,7 +143,7 @@ ThemeData _getTheme() {
         borderRadius: BorderRadius.all(Radius.circular(8)),
         borderSide: BorderSide.none,
       ),
-      hintStyle: textTheme.bodyLarge,
+      hintStyle: textTheme.bodyMedium!.copyWith(color: _hint),
       labelStyle: textTheme.bodyLarge!.copyWith(
         color: Colors.black38,
         fontWeight: FontWeight.normal,

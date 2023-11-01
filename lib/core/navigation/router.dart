@@ -8,7 +8,7 @@ import 'package:scalable_flutter_app_starter/feature/home/ui/page/home_page.dart
 import 'package:scalable_flutter_app_starter/feature/profile/ui/page/profile_page.dart';
 import 'package:scalable_flutter_app_starter/feature/settings/ui/page/settings_page.dart';
 
-import '../app/di.dart';
+import '../app/providers.dart';
 
 final _routerKey = GlobalKey<NavigatorState>();
 final _unauthorizedRouterKey = GlobalKey<NavigatorState>();
@@ -24,7 +24,7 @@ final GoRouter router = GoRouter(
     ),
     ShellRoute(
       navigatorKey: _unauthorizedRouterKey,
-      builder: (context, state, child) => UnauthorizedRouterDI(child: child),
+      builder: (context, state, child) => UnauthorizedRouterProvider(child: child),
       routes: [
         GoRoute(
           parentNavigatorKey: _unauthorizedRouterKey,
@@ -35,7 +35,7 @@ final GoRouter router = GoRouter(
     ),
     ShellRoute(
       navigatorKey: _authorizedRouterKey,
-      builder: (context, state, child) => AuthorizedRouterDI(child: child),
+      builder: (context, state, child) => AuthorizedRouterProvider(child: child),
       routes: [
         GoRoute(
           parentNavigatorKey: _authorizedRouterKey,
@@ -57,7 +57,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       parentNavigatorKey: _routerKey,
       path: AppRoute.creatingHotelka.path,
-      builder: (context, state) => const CreatingHotelkaPage(),
+      builder: (context, state) => const CreatingHotelkaProvider(child: CreatingHotelkaPage()),
     )
   ],
 );

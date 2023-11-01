@@ -1,6 +1,19 @@
 {
     "english": "Английский",
     "russian": "Русский",
+    "creatingHotelka": "Создание Хотелки",
     "createHotelka": "Создать Хотелку",
-    "creatingHotelka": "Создание Хотелки"
+    "name": "Название",
+    "description": "Описание",
+    "references": "Рeференсы",
+    "important": "Важно",
+    "importantDescription": "Ставьте галочку только если эта хотелка критически важна",
+    "category": "Категория",
+    "movies": "Фильмы",
+    "flowers": "Цветы",
+    "dates": "Свидания",
+    "presents": "Подарки",
+    "bouquetOfRose": "Букет роз",
+    "bouquetDescription": "Видела в магазине у дома офигенный букет",
+    "placeLink": "Ссылка на место"
 }

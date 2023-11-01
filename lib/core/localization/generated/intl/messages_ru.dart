@@ -22,11 +22,26 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "bouquetDescription": MessageLookupByLibrary.simpleMessage(
+            "Видела в магазине у дома офигенный букет"),
+        "bouquetOfRose": MessageLookupByLibrary.simpleMessage("Букет роз"),
+        "category": MessageLookupByLibrary.simpleMessage("Категория"),
         "createHotelka":
             MessageLookupByLibrary.simpleMessage("Создать Хотелку"),
         "creatingHotelka":
             MessageLookupByLibrary.simpleMessage("Создание Хотелки"),
+        "dates": MessageLookupByLibrary.simpleMessage("Свидания"),
+        "description": MessageLookupByLibrary.simpleMessage("Описание"),
         "english": MessageLookupByLibrary.simpleMessage("Английский"),
+        "flowers": MessageLookupByLibrary.simpleMessage("Цветы"),
+        "important": MessageLookupByLibrary.simpleMessage("Важно"),
+        "importantDescription": MessageLookupByLibrary.simpleMessage(
+            "Ставьте галочку только если эта хотелка критически важна"),
+        "movies": MessageLookupByLibrary.simpleMessage("Фильмы"),
+        "name": MessageLookupByLibrary.simpleMessage("Название"),
+        "placeLink": MessageLookupByLibrary.simpleMessage("Ссылка на место"),
+        "presents": MessageLookupByLibrary.simpleMessage("Подарки"),
+        "references": MessageLookupByLibrary.simpleMessage("Рeференсы"),
         "russian": MessageLookupByLibrary.simpleMessage("Русский")
       };
 }
