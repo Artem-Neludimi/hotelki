@@ -8,6 +8,8 @@ import 'package:scalable_flutter_app_starter/core/ui/widget/loading_overlay.dart
 import 'package:scalable_flutter_app_starter/core/ui/widget/responsive.dart';
 import 'package:scalable_flutter_app_starter/feature/auth/logic/bloc/auth_bloc.dart';
 
+import '../../../../core/localization/generated/l10n.dart';
+
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
 
@@ -66,6 +68,7 @@ class _AuthPageState extends State<AuthPage> {
                           action: _isSignUp ? 'Sign in' : 'Sign up',
                           onTap: () => setState(() => _isSignUp = !_isSignUp),
                         ),
+                        Center(child: Text(S.of(context).english)),
                         const Spacer(),
                       ],
                     ),

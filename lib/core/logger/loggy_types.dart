@@ -14,15 +14,17 @@ mixin BlocLoggy implements LoggyType {
   @override
   Loggy<BlocLoggy> get loggy => Loggy<BlocLoggy>('BLOC: $runtimeType');
 }
+mixin NotifierLoggy implements LoggyType {
+  @override
+  Loggy<BlocLoggy> get loggy => Loggy<BlocLoggy>('NOTIFIER: $runtimeType');
+}
 
 mixin RepositoryLoggy implements LoggyType {
   @override
-  Loggy<RepositoryLoggy> get loggy =>
-      Loggy<RepositoryLoggy>('REPOSITORY: $runtimeType');
+  Loggy<RepositoryLoggy> get loggy => Loggy<RepositoryLoggy>('REPOSITORY: $runtimeType');
 }
 
 mixin ApiLoggy implements LoggyType {
   @override
-  Loggy<ApiLoggy> get loggy =>
-      Loggy<ApiLoggy>('API: $runtimeType');
+  Loggy<ApiLoggy> get loggy => Loggy<ApiLoggy>('API: $runtimeType');
 }

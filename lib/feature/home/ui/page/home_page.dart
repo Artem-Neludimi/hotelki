@@ -74,6 +74,10 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: body,
       bottomNavigationBar: bottomNavigationBar,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        // child: const Text(),
+      ),
     );
   }
 }

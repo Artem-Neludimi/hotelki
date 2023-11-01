@@ -24,17 +24,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with BlocLoggy {
   }
 
   Future<void> _onAppStarted(AppStarted event, Emitter<AuthState> emit) async {
-    await _localStorageService.init();
-
     emit(const AuthLoading());
 
     try {
-      const String? userEmail = null;
+      final String? userEmail = _localStorageService.getToken?.toString();
 
       if (userEmail == null) {
         emit(const AuthUnauthorize());
       } else {
-        emit(const AuthAuthorize(authEmail: userEmail));
+        emit(AuthAuthorize(authEmail: userEmail));
       }
     } catch (e, s) {
       loggy.error('appStarted error', e, s);

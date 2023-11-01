@@ -5,10 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loggy/loggy.dart';
 import 'package:scalable_flutter_app_starter/core/app/app.dart';
+import 'package:scalable_flutter_app_starter/core/services/storage/local_storage_service.dart';
 import 'package:scalable_flutter_app_starter/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await localStorageService.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

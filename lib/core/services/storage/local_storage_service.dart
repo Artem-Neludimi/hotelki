@@ -4,10 +4,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 part 'storage_keys.dart';
 
+final localStorageService = LocalStorageService();
+
 abstract interface class _LocalStorageService implements BaseInitService {
+  int? get getToken;
   Future<void> saveToken(int token);
   Future<void> clearToken();
-  int? get getToken;
+
+  String? get locale;
+  Future<void> saveLocale(String value);
 }
 
 class LocalStorageService with ApiLoggy implements _LocalStorageService {
@@ -30,4 +35,12 @@ class LocalStorageService with ApiLoggy implements _LocalStorageService {
 
   @override
   int? get getToken => _preferences!.getInt(StorageKeys.accessToken);
+
+  @override
+  String? get locale => _preferences!.getString(StorageKeys.locale);
+
+  @override
+  Future<void> saveLocale(String value) async {
+    await _preferences!.setString(StorageKeys.locale, value);
+  }
 }

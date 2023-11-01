@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import 'package:scalable_flutter_app_starter/core/localization/app_localization.dart';
 import 'package:scalable_flutter_app_starter/core/services/firebase/auth/firebase_auth_service.dart';
 import 'package:scalable_flutter_app_starter/core/services/storage/local_storage_service.dart';
 import 'package:scalable_flutter_app_starter/feature/auth/data/auth_repository.dart';
@@ -57,7 +59,7 @@ class _RepositoryDI extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<LocalStorageService>(
-          create: (context) => LocalStorageService(),
+          create: (context) => localStorageService,
         ),
         RepositoryProvider<FirebaseAuthService>(
           create: (context) => FirebaseAuthService(
@@ -87,6 +89,11 @@ class _BlocDI extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (context) => AppLocalization(
+            context.read<LocalStorageService>(),
+          ),
+        ),
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(
             context.read<LocalStorageService>(),
