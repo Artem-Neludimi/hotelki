@@ -42,6 +42,13 @@ class CreatingHotelkaNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _isImportant = false;
+  bool get isImportant => _isImportant;
+  set isImportant(bool value) {
+    _isImportant = value;
+    notifyListeners();
+  }
+
   void pickedCategoryListener() {
     categoryController.clear();
     categoryController.text = pickedCategory;

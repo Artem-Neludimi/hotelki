@@ -15,11 +15,8 @@ class CreatingHotelkaPage extends StatelessWidget {
     return Scaffold(
       key: context.read<CreatingHotelkaNotifier>().scaffoldKey,
       appBar: AppBar(title: Text(S.of(context).creatingHotelka), centerTitle: true),
+      floatingActionButton: const _CreatingHotelkaFloating(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => context.pop(),
-        label: Text(S.of(context).createHotelka),
-      ),
       body: const Padding(
         padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
         child: SingleChildScrollView(
@@ -29,6 +26,8 @@ class CreatingHotelkaPage extends StatelessWidget {
               Gap(16),
               DescriptionCreatingHotelkaField(),
               Gap(16),
+              ImportantCheckBox(),
+              Gap(16),
               CategoryCreatingHotelkaField(),
             ],
           ),
@@ -37,3 +36,16 @@ class CreatingHotelkaPage extends StatelessWidget {
     );
   }
 }
+
+class _CreatingHotelkaFloating extends StatelessWidget {
+  const _CreatingHotelkaFloating();
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton.extended(
+      onPressed: () => context.pop(),
+      label: Text(S.of(context).createHotelka),
+    );
+  }
+}
+

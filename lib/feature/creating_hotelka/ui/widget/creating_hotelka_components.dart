@@ -131,3 +131,40 @@ class _CategoryChip extends StatelessWidget {
     );
   }
 }
+
+class ImportantCheckBox extends StatelessWidget {
+  const ImportantCheckBox({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final readNotifier = context.read<CreatingHotelkaNotifier>();
+
+    return Column(
+      children: [
+        ListTile(
+          onTap: () => readNotifier.isImportant = !readNotifier.isImportant,
+          contentPadding: EdgeInsets.zero,
+          leading: Transform.scale(
+            scale: 1.2,
+            child: Checkbox(
+              onChanged: (value) => readNotifier.isImportant = value!,
+              value: context.watch<CreatingHotelkaNotifier>().isImportant,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+              side: const BorderSide(color: Colors.black, width: 2),
+            ),
+          ),
+          title: Text(S.of(context).important),
+        ),
+        const Gap(8),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: context.colorScheme.secondaryContainer,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Text(S.of(context).importantDescription),
+        )
+      ],
+    );
+  }
+}
