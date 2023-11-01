@@ -69,6 +69,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Create Hotelka`
+  String get createHotelka {
+    return Intl.message(
+      'Create Hotelka',
+      name: 'createHotelka',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Creating Hotelka`
+  String get creatingHotelka {
+    return Intl.message(
+      'Creating Hotelka',
+      name: 'creatingHotelka',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

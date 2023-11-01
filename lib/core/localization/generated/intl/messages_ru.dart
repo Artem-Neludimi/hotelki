@@ -22,6 +22,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "createHotelka":
+            MessageLookupByLibrary.simpleMessage("Создать Хотелку"),
+        "creatingHotelka":
+            MessageLookupByLibrary.simpleMessage("Создание Хотелки"),
         "english": MessageLookupByLibrary.simpleMessage("Английский"),
         "russian": MessageLookupByLibrary.simpleMessage("Русский")
       };

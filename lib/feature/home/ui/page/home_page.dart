@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:scalable_flutter_app_starter/core/extension/context.dart';
+import 'package:scalable_flutter_app_starter/core/navigation/route.dart';
 import 'package:scalable_flutter_app_starter/feature/user/ui/widget/profile_tab.dart';
+
+import '../../../../core/localization/generated/l10n.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -74,9 +77,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: body,
       bottomNavigationBar: bottomNavigationBar,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        // child: const Text(),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => AppRoute.creatingHotelka.push(context),
+        label: Text(S.of(context).createHotelka),
       ),
     );
   }

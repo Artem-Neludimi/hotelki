@@ -7,6 +7,7 @@ enum AppRoute {
   home('/home'),
   settings('/settings'),
   profile('/profile'),
+  creatingHotelka('/creatingHotelka'),
   ;
 
   const AppRoute(this.path);
