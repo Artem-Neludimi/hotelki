@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 final lightTheme = _getTheme();
 
@@ -302,5 +301,5 @@ TextTheme _getTextTheme(ColorScheme colorScheme) {
     ),
   );
 
-  return GoogleFonts.rubikTextTheme(textTheme);
+  return textTheme;
 }
