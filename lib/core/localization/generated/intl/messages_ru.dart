@@ -30,6 +30,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Создать Хотелку"),
         "creatingHotelka":
             MessageLookupByLibrary.simpleMessage("Создание Хотелки"),
+        "date": MessageLookupByLibrary.simpleMessage("Дата"),
         "dates": MessageLookupByLibrary.simpleMessage("Свидания"),
         "description": MessageLookupByLibrary.simpleMessage("Описание"),
         "english": MessageLookupByLibrary.simpleMessage("Английский"),
@@ -39,6 +40,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Ставьте галочку только если эта хотелка критически важна"),
         "movies": MessageLookupByLibrary.simpleMessage("Фильмы"),
         "name": MessageLookupByLibrary.simpleMessage("Название"),
+        "periodicity": MessageLookupByLibrary.simpleMessage("Периодичность"),
         "placeLink": MessageLookupByLibrary.simpleMessage("Ссылка на место"),
         "presents": MessageLookupByLibrary.simpleMessage("Подарки"),
         "references": MessageLookupByLibrary.simpleMessage("Рeференсы"),

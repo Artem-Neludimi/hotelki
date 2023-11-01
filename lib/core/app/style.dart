@@ -27,6 +27,8 @@ final _lightColorScheme = ColorScheme(
   onSecondary: _darkest,
   secondaryContainer: _secondary.withOpacity(0.2),
   onSecondaryContainer: _darkest,
+  // Tertiary
+  onTertiary: _hint,
   // Error
   error: _red,
   onError: _lightest,

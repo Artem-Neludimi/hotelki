@@ -23,6 +23,7 @@ class CreatingHotelkaNotifier extends ChangeNotifier {
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController referencesController = TextEditingController();
   final TextEditingController categoryController = TextEditingController();
 
   final _categories = <String>[];

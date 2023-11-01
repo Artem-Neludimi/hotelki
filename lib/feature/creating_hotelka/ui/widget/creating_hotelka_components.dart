@@ -7,17 +7,19 @@ import '../../../../core/localization/generated/l10n.dart';
 import '../../logic/creating_hotelka_notifier.dart';
 
 class _TextFieldElement extends StatelessWidget {
-  final String text;
-  final String? hint;
-  final Widget? suffixIcon;
-  final TextEditingController controller;
-
   const _TextFieldElement({
     required this.text,
+    this.middleWidget,
     this.hint,
     this.suffixIcon,
     required this.controller,
   });
+
+  final String text;
+  final Widget? middleWidget;
+  final String? hint;
+  final Widget? suffixIcon;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,11 @@ class _TextFieldElement extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(text, style: context.textTheme.titleMedium),
+        if (middleWidget != null) ...[
+          const Gap(8),
+          middleWidget!,
+          const Gap(8),
+        ],
         const Gap(8),
         TextField(
           controller: controller,
@@ -61,6 +68,85 @@ class DescriptionCreatingHotelkaField extends StatelessWidget {
       text: S.of(context).description,
       hint: S.of(context).bouquetDescription,
       controller: context.read<CreatingHotelkaNotifier>().descriptionController,
+    );
+  }
+}
+
+class ReferencesCreatingHotelkaField extends StatelessWidget {
+  const ReferencesCreatingHotelkaField({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Gap(8),
+        _TextFieldElement(
+          controller: context.read<CreatingHotelkaNotifier>().referencesController,
+          middleWidget: Container(
+            width: 70,
+            height: 70,
+            padding: const EdgeInsets.all(23),
+            decoration: BoxDecoration(
+              color: context.colorScheme.primaryContainer,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: context.colorScheme.onSecondary,
+              ),
+              child: Icon(Icons.add, color: context.colorScheme.onPrimary),
+            ),
+          ),
+          text: S.of(context).references,
+          hint: S.of(context).references,
+          suffixIcon: const Icon(Icons.link),
+        ),
+      ],
+    );
+  }
+}
+
+class DateCreatingHotelkaField extends StatelessWidget {
+  const DateCreatingHotelkaField({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        _DateChip(S.of(context).date, Icons.date_range_sharp),
+        const Gap(16),
+        _DateChip(S.of(context).periodicity, Icons.compare_arrows_outlined),
+      ],
+    );
+  }
+}
+
+class _DateChip extends StatelessWidget {
+  const _DateChip(this.text, this.icon);
+
+  final String text;
+  final IconData? icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+          height: 50,
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          decoration: BoxDecoration(
+            color: context.colorScheme.onPrimary,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(text, style: TextStyle(color: context.colorScheme.onTertiary)),
+              const Gap(8),
+              Icon(icon, color: context.colorScheme.onSecondary),
+            ],
+          )),
     );
   }
 }

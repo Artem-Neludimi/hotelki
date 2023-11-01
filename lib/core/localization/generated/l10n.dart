@@ -219,6 +219,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Дата`
+  String get date {
+    return Intl.message(
+      'Дата',
+      name: 'date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Периодичность`
+  String get periodicity {
+    return Intl.message(
+      'Периодичность',
+      name: 'periodicity',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

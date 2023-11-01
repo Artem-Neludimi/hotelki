@@ -15,6 +15,8 @@
     "presents": "Подарки",
     "bouquetOfRose": "Букет роз",
     "bouquetDescription": "Видела в магазине у дома офигенный букет",
-    "placeLink": "Ссылка на место"
+    "placeLink": "Ссылка на место",
+    "date": "Дата",
+    "periodicity": "Периодичность"
 
 }

@@ -26,9 +26,14 @@ class CreatingHotelkaPage extends StatelessWidget {
               Gap(16),
               DescriptionCreatingHotelkaField(),
               Gap(16),
+              ReferencesCreatingHotelkaField(),
+              Gap(16),
               ImportantCheckBox(),
               Gap(16),
+              DateCreatingHotelkaField(),
+              Gap(16),
               CategoryCreatingHotelkaField(),
+              Gap(120),
             ],
           ),
         ),
@@ -48,4 +53,3 @@ class _CreatingHotelkaFloating extends StatelessWidget {
     );
   }
 }
-
