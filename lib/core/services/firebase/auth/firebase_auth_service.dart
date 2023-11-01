@@ -52,7 +52,7 @@ class FirebaseAuthService with ApiLoggy implements _FirebaseAuthService {
     final token = _localStorageService.getToken;
     if (token == null) return null;
     try {
-      final userCredential = await _auth.signInWithCustomToken(token);
+      final userCredential = await _auth.signInWithCustomToken(token as String);
       return userCredential.user?.email;
     } catch (e, s) {
       loggy.error(e, s);

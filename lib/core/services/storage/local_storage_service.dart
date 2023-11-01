@@ -7,7 +7,7 @@ part 'storage_keys.dart';
 abstract interface class _LocalStorageService implements BaseInitService {
   Future<void> saveToken(int token);
   Future<void> clearToken();
-  String? get getToken;
+  int? get getToken;
 }
 
 class LocalStorageService with ApiLoggy implements _LocalStorageService {
@@ -29,5 +29,5 @@ class LocalStorageService with ApiLoggy implements _LocalStorageService {
   }
 
   @override
-  String? get getToken => _preferences!.getString(StorageKeys.accessToken);
+  int? get getToken => _preferences!.getInt(StorageKeys.accessToken);
 }

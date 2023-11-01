@@ -57,7 +57,7 @@ class _RepositoryDI extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<LocalStorageService>(
-          create: (context) => LocalStorageService()..init(),
+          create: (context) => LocalStorageService(),
         ),
         RepositoryProvider<FirebaseAuthService>(
           create: (context) => FirebaseAuthService(
@@ -70,9 +70,7 @@ class _RepositoryDI extends StatelessWidget {
           ),
         ),
         RepositoryProvider<AuthRepository>(
-          create: (context) => AuthRepository(
-            context.read<FirebaseAuthService>(),
-          ),
+          create: (context) => AuthRepository(),
         ),
       ],
       child: child,
@@ -91,7 +89,8 @@ class _BlocDI extends StatelessWidget {
       providers: [
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(
-            context.read<AuthRepository>(),
+            context.read<LocalStorageService>(),
+            context.read<FirebaseAuthService>(),
           )..add(const AppStarted()),
         ),
       ],
