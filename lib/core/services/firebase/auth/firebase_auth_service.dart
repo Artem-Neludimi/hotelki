@@ -1,14 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:scalable_flutter_app_starter/core/logger/loggy_types.dart';
 
-import '../../storage/local_storage_service.dart';
-
 abstract interface class _FirebaseAuthService {
   Future<String?> signInWithEmailAndPassword({required String email, required String password});
 
   Future<String?> createUserWithEmailAndPassword({required String email, required String password});
 
-  Future<String?> signInWithToken();
+  String? tryToSingIn();
 
   Future<void> signOut();
 
@@ -16,9 +14,7 @@ abstract interface class _FirebaseAuthService {
 }
 
 class FirebaseAuthService with ApiLoggy implements _FirebaseAuthService {
-  final LocalStorageService _localStorageService;
-
-  FirebaseAuthService(this._localStorageService);
+  FirebaseAuthService();
 
   final _auth = FirebaseAuth.instance;
   User? get user => _auth.currentUser;
@@ -39,7 +35,6 @@ class FirebaseAuthService with ApiLoggy implements _FirebaseAuthService {
   Future<String?> createUserWithEmailAndPassword({required String email, required String password}) async {
     try {
       final userCredential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      await _localStorageService.saveToken(userCredential.credential!.token!);
       return userCredential.user?.email;
     } catch (e, s) {
       loggy.error(e, s);
@@ -48,23 +43,15 @@ class FirebaseAuthService with ApiLoggy implements _FirebaseAuthService {
   }
 
   @override
-  Future<String?> signInWithToken() async {
-    final token = _localStorageService.getToken;
-    if (token == null) return null;
-    try {
-      final userCredential = await _auth.signInWithCustomToken(token as String);
-      return userCredential.user?.email;
-    } catch (e, s) {
-      loggy.error(e, s);
-      return null;
-    }
+  String? tryToSingIn() {
+    final user = _auth.currentUser;
+    return user?.email;
   }
 
   @override
   Future<void> signOut() async {
     try {
       await _auth.signOut();
-      await _localStorageService.clearToken();
     } catch (e, s) {
       loggy.error(e, s);
     }

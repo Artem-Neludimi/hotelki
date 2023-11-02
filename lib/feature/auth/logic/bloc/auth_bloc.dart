@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scalable_flutter_app_starter/core/logger/loggy_types.dart';
-import 'package:scalable_flutter_app_starter/core/services/storage/local_storage_service.dart';
 
 import '../../../../core/services/firebase/auth/firebase_auth_service.dart';
 
@@ -9,10 +8,9 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> with BlocLoggy {
-  final LocalStorageService _localStorageService;
   final FirebaseAuthService _firebaseAuthService;
 
-  AuthBloc(this._localStorageService, this._firebaseAuthService) : super(const AuthInitial()) {
+  AuthBloc(this._firebaseAuthService) : super(const AuthInitial()) {
     on<AuthEvent>(
       (event, emit) => switch (event) {
         AppStarted() => _onAppStarted(event, emit),
@@ -25,9 +23,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with BlocLoggy {
 
   Future<void> _onAppStarted(AppStarted event, Emitter<AuthState> emit) async {
     emit(const AuthLoading());
-
     try {
-      final String? userEmail = _localStorageService.getToken?.toString();
+      final userEmail = _firebaseAuthService.tryToSingIn();
 
       if (userEmail == null) {
         emit(const AuthUnauthorize());

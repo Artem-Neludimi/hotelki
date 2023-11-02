@@ -61,9 +61,7 @@ class _RepositoryDI extends StatelessWidget {
           create: (context) => localStorageService,
         ),
         RepositoryProvider<FirebaseAuthService>(
-          create: (context) => FirebaseAuthService(
-            context.read<LocalStorageService>(),
-          ),
+          create: (context) => FirebaseAuthService(),
         ),
         RepositoryProvider<UserRepository>(
           create: (context) => UserRepository(
@@ -95,7 +93,6 @@ class _BlocDI extends StatelessWidget {
         ),
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(
-            context.read<LocalStorageService>(),
             context.read<FirebaseAuthService>(),
           )..add(const AppStarted()),
         ),
@@ -104,4 +101,3 @@ class _BlocDI extends StatelessWidget {
     );
   }
 }
-
