@@ -16,7 +16,7 @@ class AuthorizedRouterProvider extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => UserCubit(
-        userEmail: context.read<AuthBloc>().state.user,
+        user: context.read<AuthBloc>().state.user,
       ),
       child: child,
     );

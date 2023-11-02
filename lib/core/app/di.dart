@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:scalable_flutter_app_starter/core/localization/app_localization.dart';
 import 'package:scalable_flutter_app_starter/core/services/firebase/auth/firebase_auth_service.dart';
+import 'package:scalable_flutter_app_starter/core/services/firebase/firestore/firebase_firestore_service.dart';
 import 'package:scalable_flutter_app_starter/core/services/storage/local_storage_service.dart';
 import 'package:scalable_flutter_app_starter/feature/auth/data/auth_repository.dart';
 import 'package:scalable_flutter_app_starter/feature/user/provider/user_mock_provider.dart';
@@ -63,13 +64,19 @@ class _RepositoryDI extends StatelessWidget {
         RepositoryProvider<FirebaseAuthService>(
           create: (context) => FirebaseAuthService(),
         ),
+        RepositoryProvider<FirebaseFirestoreService>(
+          create: (context) => FirebaseFirestoreService(),
+        ),
         RepositoryProvider<UserRepository>(
           create: (context) => UserRepository(
             userProvider: context.read<UserMockApi>(),
           ),
         ),
         RepositoryProvider<AuthRepository>(
-          create: (context) => AuthRepository(),
+          create: (context) => AuthRepository(
+            context.read<FirebaseFirestoreService>(),
+            context.read<FirebaseAuthService>(),
+          ),
         ),
       ],
       child: child,
@@ -93,7 +100,7 @@ class _BlocDI extends StatelessWidget {
         ),
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(
-            context.read<FirebaseAuthService>(),
+            context.read<AuthRepository>(),
           )..add(const AppStarted()),
         ),
       ],

@@ -1,16 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scalable_flutter_app_starter/core/logger/loggy_types.dart';
-
-import '../../../../core/services/firebase/auth/firebase_auth_service.dart';
+import 'package:scalable_flutter_app_starter/core/services/api/model/user/user_model.dart';
+import 'package:scalable_flutter_app_starter/feature/auth/data/auth_repository.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> with BlocLoggy {
-  final FirebaseAuthService _firebaseAuthService;
+  final AuthRepository _authRepository;
 
-  AuthBloc(this._firebaseAuthService) : super(const AuthInitial()) {
+  AuthBloc(this._authRepository) : super(const AuthInitial()) {
     on<AuthEvent>(
       (event, emit) => switch (event) {
         AppStarted() => _onAppStarted(event, emit),
@@ -24,12 +24,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with BlocLoggy {
   Future<void> _onAppStarted(AppStarted event, Emitter<AuthState> emit) async {
     emit(const AuthLoading());
     try {
-      final userEmail = _firebaseAuthService.tryToSingIn();
-
-      if (userEmail == null) {
+      final user = await _authRepository.tryToSignIn();
+      loggy.info('user: $user');
+      if (user == null) {
         emit(const AuthUnauthorize());
       } else {
-        emit(AuthAuthorize(authEmail: userEmail));
+        emit(AuthAuthorize(authEmail: user));
       }
     } catch (e, s) {
       loggy.error('appStarted error', e, s);
@@ -44,12 +44,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with BlocLoggy {
     emit(const AuthLoading());
 
     try {
-      final userEmail = await _firebaseAuthService.createUserWithEmailAndPassword(
-        email: event.email,
-        password: event.password,
-      );
-
-      emit(AuthAuthorize(authEmail: userEmail!));
+      final user = await _authRepository.createUserWithEmailAndPassword(event.email, event.password);
+      loggy.info('user: $user');
+      emit(AuthAuthorize(authEmail: user!));
     } catch (e, s) {
       loggy.error('signUpWithEmailAndPassword error', e, s);
       emit(AuthFailure(errorMessage: e.toString()));
@@ -59,11 +56,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with BlocLoggy {
   Future<void> _signInWithEmailAndPassword(SignInWithEmailAndPassword event, Emitter<AuthState> emit) async {
     emit(const AuthLoading());
     try {
-      final user = await _firebaseAuthService.signInWithEmailAndPassword(
-        email: event.email,
-        password: event.password,
-      );
-
+      final user = await _authRepository.signInWithEmailAndPassword(event.email, event.password);
+      loggy.info('user: $user');
       emit(AuthAuthorize(authEmail: user!));
     } catch (e, s) {
       loggy.error('signInWithEmailAndPassword error', e, s);
@@ -74,7 +68,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with BlocLoggy {
   Future<void> _onLogOut(LogOut event, Emitter<AuthState> emit) async {
     emit(const AuthLoading());
     try {
-      _firebaseAuthService.signOut();
+      _authRepository.signOut();
       emit(const AuthInitial());
     } catch (e, s) {
       loggy.error('logOut error', e, s);

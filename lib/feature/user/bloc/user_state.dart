@@ -14,5 +14,5 @@ class UserLoaded extends UserState {
     required this.user,
   });
 
-  final String? user;
+  final UserModel? user;
 }
