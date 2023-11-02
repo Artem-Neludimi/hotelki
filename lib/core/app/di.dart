@@ -6,8 +6,6 @@ import 'package:scalable_flutter_app_starter/core/services/firebase/auth/firebas
 import 'package:scalable_flutter_app_starter/core/services/firebase/firestore/firebase_firestore_service.dart';
 import 'package:scalable_flutter_app_starter/core/services/storage/local_storage_service.dart';
 import 'package:scalable_flutter_app_starter/feature/auth/data/auth_repository.dart';
-import 'package:scalable_flutter_app_starter/feature/user/provider/user_mock_provider.dart';
-import 'package:scalable_flutter_app_starter/feature/user/repository/user_repository.dart';
 
 import '../../feature/auth/logic/bloc/auth_bloc.dart';
 
@@ -21,30 +19,10 @@ class DI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _ApiDI(
-      child: _RepositoryDI(
-        child: _BlocDI(
-          child: child,
-        ),
+    return _RepositoryDI(
+      child: _BlocDI(
+        child: child,
       ),
-    );
-  }
-}
-
-class _ApiDI extends StatelessWidget {
-  const _ApiDI({required this.child});
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return MultiRepositoryProvider(
-      providers: [
-        RepositoryProvider<UserMockApi>(
-          create: (context) => UserMockApi(),
-        ),
-      ],
-      child: child,
     );
   }
 }
@@ -66,11 +44,6 @@ class _RepositoryDI extends StatelessWidget {
         ),
         RepositoryProvider<FirebaseFirestoreService>(
           create: (context) => FirebaseFirestoreService(),
-        ),
-        RepositoryProvider<UserRepository>(
-          create: (context) => UserRepository(
-            userProvider: context.read<UserMockApi>(),
-          ),
         ),
         RepositoryProvider<AuthRepository>(
           create: (context) => AuthRepository(

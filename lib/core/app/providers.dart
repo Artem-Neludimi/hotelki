@@ -4,9 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:scalable_flutter_app_starter/feature/creating_hotelka/logic/creating_hotelka_notifier.dart';
 import 'package:scalable_flutter_app_starter/feature/home/logic/bloc/home_bloc.dart';
 
-import '../../feature/auth/logic/bloc/auth_bloc.dart';
-import '../../feature/user/bloc/user_cubit.dart';
-
 class AuthorizedRouterProvider extends StatelessWidget {
   const AuthorizedRouterProvider({super.key, required this.child});
 
@@ -14,12 +11,7 @@ class AuthorizedRouterProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => UserCubit(
-        user: context.read<AuthBloc>().state.user,
-      ),
-      child: child,
-    );
+    return child;
   }
 }
 
