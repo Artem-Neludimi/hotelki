@@ -4,7 +4,7 @@ import '../../../core/services/api/model/user/user_model.dart';
 import '../../../core/services/firebase/auth/firebase_auth_service.dart';
 import '../../../core/services/firebase/firestore/firebase_firestore_service.dart';
 
-abstract interface class _AuthRepository {
+abstract interface class AuthRepository {
   Future<UserModel?> tryToSignIn();
 
   Future<UserModel?> getCurrentUser(String email);
@@ -16,8 +16,8 @@ abstract interface class _AuthRepository {
   Future<void> signOut();
 }
 
-interface class AuthRepository with RepositoryLoggy implements _AuthRepository {
-  AuthRepository(this._firebaseFirestoreService, this._firebaseAuthService);
+final class AuthRepositoryImpl with RepositoryLoggy implements AuthRepository {
+  AuthRepositoryImpl(this._firebaseFirestoreService, this._firebaseAuthService);
 
   final FirebaseFirestoreService _firebaseFirestoreService;
   final FirebaseAuthService _firebaseAuthService;
@@ -41,7 +41,8 @@ interface class AuthRepository with RepositoryLoggy implements _AuthRepository {
     final userEmail = await _firebaseAuthService.createUserWithEmailAndPassword(email, password);
     if (userEmail == null) {
       return null;
-    }final user = await _firebaseFirestoreService.createUser(userEmail);
+    }
+    final user = await _firebaseFirestoreService.createUser(userEmail);
 
     return user;
   }

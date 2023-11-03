@@ -4,14 +4,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 part 'storage_keys.dart';
 
-final localStorageService = LocalStorageService();
-
-abstract interface class _LocalStorageService implements BaseInitService {
+abstract interface class LocalStorageService implements BaseInitService {
   String? get locale;
   Future<void> saveLocale(String value);
 }
 
-class LocalStorageService with ApiLoggy implements _LocalStorageService {
+class LocalStorageServiceImpl with ApiLoggy implements LocalStorageService {
   SharedPreferences? _preferences;
 
   @override

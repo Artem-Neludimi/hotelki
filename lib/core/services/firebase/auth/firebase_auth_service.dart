@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:scalable_flutter_app_starter/core/logger/loggy_types.dart';
 
-abstract interface class _FirebaseAuthService {
+abstract interface class FirebaseAuthService {
   Future<String?> signInWithEmailAndPassword(String email, String password);
 
   Future<String?> createUserWithEmailAndPassword(String email, String password);
@@ -13,8 +13,8 @@ abstract interface class _FirebaseAuthService {
   bool get isSignedIn;
 }
 
-class FirebaseAuthService with ApiLoggy implements _FirebaseAuthService {
-  FirebaseAuthService();
+class FirebaseAuthServiceImpl with ApiLoggy implements FirebaseAuthService {
+  FirebaseAuthServiceImpl();
 
   final _auth = FirebaseAuth.instance;
 

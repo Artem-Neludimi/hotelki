@@ -8,6 +8,7 @@ import 'package:scalable_flutter_app_starter/core/services/storage/local_storage
 import 'package:scalable_flutter_app_starter/feature/auth/data/auth_repository.dart';
 
 import '../../feature/auth/logic/bloc/auth_bloc.dart';
+import '../services/firebase/firebase.dart';
 
 class DI extends StatelessWidget {
   const DI({
@@ -19,10 +20,39 @@ class DI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _RepositoryDI(
-      child: _BlocDI(
-        child: child,
+    return _ServiceDI(
+      child: _RepositoryDI(
+        child: _BlocDI(
+          child: child,
+        ),
       ),
+    );
+  }
+}
+
+class _ServiceDI extends StatelessWidget {
+  const _ServiceDI({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<LocalStorageService>(
+          create: (context) => LocalStorageServiceImpl(),
+        ),
+        RepositoryProvider<FirebaseAuthService>(
+          create: (context) => FirebaseAuthServiceImpl(),
+        ),
+        RepositoryProvider<FirebaseService>(
+          create: (context) => FirebaseServiceImpl(),
+        ),
+        RepositoryProvider<FirebaseFirestoreService>(
+          create: (context) => FirebaseFirestoreServiceImpl(),
+        ),
+      ],
+      child: child,
     );
   }
 }
@@ -36,17 +66,8 @@ class _RepositoryDI extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<LocalStorageService>(
-          create: (context) => localStorageService,
-        ),
-        RepositoryProvider<FirebaseAuthService>(
-          create: (context) => FirebaseAuthService(),
-        ),
-        RepositoryProvider<FirebaseFirestoreService>(
-          create: (context) => FirebaseFirestoreService(),
-        ),
         RepositoryProvider<AuthRepository>(
-          create: (context) => AuthRepository(
+          create: (context) => AuthRepositoryImpl(
             context.read<FirebaseFirestoreService>(),
             context.read<FirebaseAuthService>(),
           ),
