@@ -6,7 +6,8 @@ sealed class HomeEvent {
 }
 
 final class Started extends HomeEvent {
-  const Started();
+  final UserModel user;
+  const Started(this.user);
 }
 
 final class OnHotelkaItemTap extends HomeEvent {

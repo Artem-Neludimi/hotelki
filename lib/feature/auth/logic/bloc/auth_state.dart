@@ -15,7 +15,7 @@ class AuthLoading extends AuthState {
 }
 
 class AuthAuthorize extends AuthState {
-  const AuthAuthorize({required UserModel? authEmail}) : super(authEmail);
+  const AuthAuthorize({required UserModel? user}) : super(user);
 }
 
 class AuthUnauthorize extends AuthState {

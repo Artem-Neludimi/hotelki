@@ -34,7 +34,7 @@ class HomeProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeBloc()..add(const Started()),
+      create: (context) => HomeBloc(),
       child: child,
     );
   }

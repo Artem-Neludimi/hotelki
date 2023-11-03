@@ -29,7 +29,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with BlocLoggy {
       if (user == null) {
         emit(const AuthUnauthorize());
       } else {
-        emit(AuthAuthorize(authEmail: user));
+        emit(AuthAuthorize(user: user));
       }
     } catch (e, s) {
       loggy.error('appStarted error', e, s);
@@ -46,7 +46,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with BlocLoggy {
     try {
       final user = await _authRepository.createUserWithEmailAndPassword(event.email, event.password);
       loggy.info('user: $user');
-      emit(AuthAuthorize(authEmail: user!));
+      emit(AuthAuthorize(user: user!));
     } catch (e, s) {
       loggy.error('signUpWithEmailAndPassword error', e, s);
       emit(AuthFailure(errorMessage: e.toString()));
@@ -58,7 +58,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> with BlocLoggy {
     try {
       final user = await _authRepository.signInWithEmailAndPassword(event.email, event.password);
       loggy.info('user: $user');
-      emit(AuthAuthorize(authEmail: user!));
+      emit(AuthAuthorize(user: user!));
     } catch (e, s) {
       loggy.error('signInWithEmailAndPassword error', e, s);
       emit(AuthFailure(errorMessage: e.toString()));

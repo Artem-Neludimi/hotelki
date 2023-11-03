@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:scalable_flutter_app_starter/core/services/api/model/user/user_model.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
@@ -14,7 +15,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     );
   }
   Future<void> _onStarted(Started event, Emitter<HomeState> emit) async {
-    emit(const HomeLoaded(mockHotelkaItems));
+    if (event.user.partnerEmail == null) {
+      emit(const HomeNoPartner());
+    } else {
+      emit(const HomeLoaded(mockHotelkaItems));
+    }
   }
 
   Future<void> _onHotelkaItemTap(OnHotelkaItemTap event, Emitter<HomeState> emit) async {

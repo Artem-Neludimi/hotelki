@@ -21,3 +21,7 @@ final class HomeInitial extends HomeState {
 final class HomeLoaded extends HomeState {
   const HomeLoaded(super.hotelkaItems);
 }
+
+final class HomeNoPartner extends HomeState {
+  const HomeNoPartner() : super(null);
+}
