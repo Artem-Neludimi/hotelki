@@ -66,7 +66,7 @@ class _HomeBody extends StatelessWidget {
                 ),
                 const Gap(16),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () => AppRoute.partnerSettings.push(context),
                   child: const Text('Добавить'),
                 )
               ],

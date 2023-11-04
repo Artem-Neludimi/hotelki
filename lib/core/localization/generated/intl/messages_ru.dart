@@ -40,6 +40,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Ставьте галочку только если эта хотелка критически важна"),
         "movies": MessageLookupByLibrary.simpleMessage("Фильмы"),
         "name": MessageLookupByLibrary.simpleMessage("Название"),
+        "partner": MessageLookupByLibrary.simpleMessage("Партнер"),
         "periodicity": MessageLookupByLibrary.simpleMessage("Периодичность"),
         "placeLink": MessageLookupByLibrary.simpleMessage("Ссылка на место"),
         "presents": MessageLookupByLibrary.simpleMessage("Подарки"),

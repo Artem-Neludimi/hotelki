@@ -53,3 +53,13 @@ class CreatingHotelkaProvider extends StatelessWidget {
     );
   }
 }
+class PartnerSettingsProvider extends StatelessWidget {
+  const PartnerSettingsProvider({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return child;
+  }
+}

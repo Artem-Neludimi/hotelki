@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:go_router/go_router.dart';
 import 'package:scalable_flutter_app_starter/core/logger/loggy_types.dart';
+import 'package:scalable_flutter_app_starter/core/navigation/route.dart';
 import 'package:uni_links/uni_links.dart';
 
 import '../base_init_service.dart';
@@ -31,7 +32,7 @@ class DeepLinkServiceImpl with ServiceLoggy implements DeepLinkService {
   Future<void> onInitialUri() async {
     if (_initialUri != null) {
       loggy.info("run runInitialDeepLink $_initialUri");
-      //  _router.go(_initialUri!.);
+      _router.go(AppRoute.settings.path);
       _initialUri = null;
     } else {
       loggy.error("no initial uri");
@@ -46,7 +47,7 @@ class DeepLinkServiceImpl with ServiceLoggy implements DeepLinkService {
   void _onDeepLinkListen(Uri? uri) async {
     loggy.info('got a new deep link - $uri');
     if (uri != null) {
-      // await pushRouteFromUri(uri);
+      _router.go(AppRoute.settings.path);
     }
   }
 
