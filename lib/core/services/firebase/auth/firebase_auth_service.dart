@@ -13,7 +13,7 @@ abstract interface class FirebaseAuthService {
   bool get isSignedIn;
 }
 
-class FirebaseAuthServiceImpl with ApiLoggy implements FirebaseAuthService {
+class FirebaseAuthServiceImpl with ServiceLoggy implements FirebaseAuthService {
   FirebaseAuthServiceImpl();
 
   final _auth = FirebaseAuth.instance;

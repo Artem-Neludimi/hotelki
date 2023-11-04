@@ -10,7 +10,7 @@ abstract interface class FirebaseFirestoreService {
   Future<UserModel?> createUser(String email);
 }
 
-final class FirebaseFirestoreServiceImpl with ApiLoggy implements FirebaseFirestoreService {
+final class FirebaseFirestoreServiceImpl with ServiceLoggy implements FirebaseFirestoreService {
   FirebaseFirestoreServiceImpl();
 
   final _firestore = FirebaseFirestore.instance;

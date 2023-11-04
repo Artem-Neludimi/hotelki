@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:scalable_flutter_app_starter/core/localization/app_localization.dart';
+import 'package:scalable_flutter_app_starter/core/navigation/router.dart';
+import 'package:scalable_flutter_app_starter/core/services/deep_linking/deep_link_service.dart';
 import 'package:scalable_flutter_app_starter/core/services/firebase/auth/firebase_auth_service.dart';
 import 'package:scalable_flutter_app_starter/core/services/firebase/firestore/firebase_firestore_service.dart';
 import 'package:scalable_flutter_app_starter/core/services/storage/local_storage_service.dart';
@@ -42,15 +44,19 @@ class _ServiceDI extends StatelessWidget {
         RepositoryProvider<LocalStorageService>(
           create: (context) => LocalStorageServiceImpl(),
         ),
-        RepositoryProvider<FirebaseAuthService>(
-          create: (context) => FirebaseAuthServiceImpl(),
-        ),
         RepositoryProvider<FirebaseService>(
           create: (context) => FirebaseServiceImpl(),
+        ),
+        RepositoryProvider<FirebaseAuthService>(
+          create: (context) => FirebaseAuthServiceImpl(),
         ),
         RepositoryProvider<FirebaseFirestoreService>(
           create: (context) => FirebaseFirestoreServiceImpl(),
         ),
+        RepositoryProvider<DeepLinkService>(
+          create: (context) => DeepLinkServiceImpl(router),
+        ),
+        
       ],
       child: child,
     );

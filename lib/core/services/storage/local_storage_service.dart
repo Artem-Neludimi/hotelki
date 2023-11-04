@@ -9,7 +9,7 @@ abstract interface class LocalStorageService implements BaseInitService {
   Future<void> saveLocale(String value);
 }
 
-class LocalStorageServiceImpl with ApiLoggy implements LocalStorageService {
+class LocalStorageServiceImpl with ServiceLoggy implements LocalStorageService {
   SharedPreferences? _preferences;
 
   @override
