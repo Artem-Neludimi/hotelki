@@ -249,6 +249,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Отправьте эту ссылку своему партнеру`
+  String get sendToPartner {
+    return Intl.message(
+      'Отправьте эту ссылку своему партнеру',
+      name: 'sendToPartner',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ссылка скопирована`
+  String get linkCopied {
+    return Intl.message(
+      'Ссылка скопирована',
+      name: 'linkCopied',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

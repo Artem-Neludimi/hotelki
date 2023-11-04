@@ -28,9 +28,11 @@ extension Context on BuildContext {
     ScaffoldMessenger.of(this).showSnackBar(
       SnackBar(
         backgroundColor: backgroundColor,
-        content: Text(
-          message,
-          style: TextStyle(color: foregroundColor),
+        content: Center(
+          child: Text(
+            message,
+            style: TextStyle(color: foregroundColor),
+          ),
         ),
       ),
     );

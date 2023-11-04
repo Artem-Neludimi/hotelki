@@ -38,6 +38,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "important": MessageLookupByLibrary.simpleMessage("Важно"),
         "importantDescription": MessageLookupByLibrary.simpleMessage(
             "Ставьте галочку только если эта хотелка критически важна"),
+        "linkCopied":
+            MessageLookupByLibrary.simpleMessage("Ссылка скопирована"),
         "movies": MessageLookupByLibrary.simpleMessage("Фильмы"),
         "name": MessageLookupByLibrary.simpleMessage("Название"),
         "partner": MessageLookupByLibrary.simpleMessage("Партнер"),
@@ -45,6 +47,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "placeLink": MessageLookupByLibrary.simpleMessage("Ссылка на место"),
         "presents": MessageLookupByLibrary.simpleMessage("Подарки"),
         "references": MessageLookupByLibrary.simpleMessage("Рeференсы"),
-        "russian": MessageLookupByLibrary.simpleMessage("Русский")
+        "russian": MessageLookupByLibrary.simpleMessage("Русский"),
+        "sendToPartner": MessageLookupByLibrary.simpleMessage(
+            "Отправьте эту ссылку своему партнеру")
       };
 }

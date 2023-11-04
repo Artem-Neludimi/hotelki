@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:scalable_flutter_app_starter/core/navigation/route.dart';
+import 'package:scalable_flutter_app_starter/feature/auth/logic/bloc/auth_bloc.dart';
 import 'package:scalable_flutter_app_starter/feature/auth/ui/page/auth_page.dart';
 import 'package:scalable_flutter_app_starter/feature/creating_hotelka/ui/page/creating_hotelka.dart';
 import 'package:scalable_flutter_app_starter/feature/splash/splash_page.dart';
@@ -63,7 +65,11 @@ final GoRouter router = GoRouter(
     GoRoute(
       parentNavigatorKey: _routerKey,
       path: AppRoute.partnerSettings.path,
-      builder: (context, state) => const PartnerSettingsProvider(child: PartnerSettingsPage()),
+      builder: (context, state) => PartnerSettingsProvider(
+        child: PartnerSettingsPage(
+          partnerEmail: context.read<AuthBloc>().state.user!.partnerEmail,
+        ),
+      ),
     ),
   ],
 );

@@ -8,6 +8,7 @@ part 'firestore_keys.dart';
 abstract interface class FirebaseFirestoreService {
   Future<UserModel?> getUserByEmail(String email);
   Future<UserModel?> createUser(String email);
+  Future<void> boundAccounts(String email, String partnerEmail);
 }
 
 final class FirebaseFirestoreServiceImpl with ServiceLoggy implements FirebaseFirestoreService {
@@ -43,6 +44,18 @@ final class FirebaseFirestoreServiceImpl with ServiceLoggy implements FirebaseFi
       final querySnapshotAgain = await userQuery.get();
       final userData = querySnapshotAgain.docs.first.data();
       return UserModel.fromJson(userData);
+    } catch (e, s) {
+      loggy.error('getCurrentUser error', e, s);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> boundAccounts(String email, String partnerEmail) async {
+    try {
+      final userQuery = _users.where(FirestoreKeys.email, isEqualTo: email);
+      final querySnapshot = await userQuery.get();
+      if (querySnapshot.docs.isNotEmpty) {}
     } catch (e, s) {
       loggy.error('getCurrentUser error', e, s);
       rethrow;

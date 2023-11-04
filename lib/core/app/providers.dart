@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:scalable_flutter_app_starter/feature/creating_hotelka/logic/creating_hotelka_notifier.dart';
 import 'package:scalable_flutter_app_starter/feature/home/logic/bloc/home_bloc.dart';
+import 'package:scalable_flutter_app_starter/feature/partner_settings/logic/bloc/partner_settings_bloc.dart';
+
+import '../../feature/partner_settings/data/partner_settings_repository.dart';
 
 class AuthorizedRouterProvider extends StatelessWidget {
   const AuthorizedRouterProvider({super.key, required this.child});
@@ -53,6 +56,7 @@ class CreatingHotelkaProvider extends StatelessWidget {
     );
   }
 }
+
 class PartnerSettingsProvider extends StatelessWidget {
   const PartnerSettingsProvider({super.key, required this.child});
 
@@ -60,6 +64,11 @@ class PartnerSettingsProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return child;
+    return BlocProvider(
+      create: (context) => PartnerSettingsBloc(
+        context.read<PartnerSettingsRepository>(),
+      ),
+      child: child,
+    );
   }
 }
