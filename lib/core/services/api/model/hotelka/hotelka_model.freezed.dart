@@ -20,9 +20,11 @@ HotelkaModel _$HotelkaModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$HotelkaModel {
+  String get email => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   dynamic get references => throw _privateConstructorUsedError;
+  String get category => throw _privateConstructorUsedError;
   bool get isImportant => throw _privateConstructorUsedError;
   bool get isDone => throw _privateConstructorUsedError;
   String get date => throw _privateConstructorUsedError;
@@ -41,9 +43,11 @@ abstract class $HotelkaModelCopyWith<$Res> {
       _$HotelkaModelCopyWithImpl<$Res, HotelkaModel>;
   @useResult
   $Res call(
-      {String name,
+      {String email,
+      String name,
       String description,
       dynamic references,
+      String category,
       bool isImportant,
       bool isDone,
       String date,
@@ -63,15 +67,21 @@ class _$HotelkaModelCopyWithImpl<$Res, $Val extends HotelkaModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? email = null,
     Object? name = null,
     Object? description = null,
     Object? references = freezed,
+    Object? category = null,
     Object? isImportant = null,
     Object? isDone = null,
     Object? date = null,
     Object? periodicity = null,
   }) {
     return _then(_value.copyWith(
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -84,6 +94,10 @@ class _$HotelkaModelCopyWithImpl<$Res, $Val extends HotelkaModel>
           ? _value.references
           : references // ignore: cast_nullable_to_non_nullable
               as dynamic,
+      category: null == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
       isImportant: null == isImportant
           ? _value.isImportant
           : isImportant // ignore: cast_nullable_to_non_nullable
@@ -113,9 +127,11 @@ abstract class _$$HotelkaModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String name,
+      {String email,
+      String name,
       String description,
       dynamic references,
+      String category,
       bool isImportant,
       bool isDone,
       String date,
@@ -133,15 +149,21 @@ class __$$HotelkaModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? email = null,
     Object? name = null,
     Object? description = null,
     Object? references = freezed,
+    Object? category = null,
     Object? isImportant = null,
     Object? isDone = null,
     Object? date = null,
     Object? periodicity = null,
   }) {
     return _then(_$HotelkaModelImpl(
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -154,6 +176,10 @@ class __$$HotelkaModelImplCopyWithImpl<$Res>
           ? _value.references
           : references // ignore: cast_nullable_to_non_nullable
               as dynamic,
+      category: null == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
       isImportant: null == isImportant
           ? _value.isImportant
           : isImportant // ignore: cast_nullable_to_non_nullable
@@ -178,9 +204,11 @@ class __$$HotelkaModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$HotelkaModelImpl implements _HotelkaModel {
   _$HotelkaModelImpl(
-      {required this.name,
+      {required this.email,
+      required this.name,
       required this.description,
       required this.references,
+      required this.category,
       required this.isImportant,
       required this.isDone,
       required this.date,
@@ -190,11 +218,15 @@ class _$HotelkaModelImpl implements _HotelkaModel {
       _$$HotelkaModelImplFromJson(json);
 
   @override
+  final String email;
+  @override
   final String name;
   @override
   final String description;
   @override
   final dynamic references;
+  @override
+  final String category;
   @override
   final bool isImportant;
   @override
@@ -206,7 +238,7 @@ class _$HotelkaModelImpl implements _HotelkaModel {
 
   @override
   String toString() {
-    return 'HotelkaModel(name: $name, description: $description, references: $references, isImportant: $isImportant, isDone: $isDone, date: $date, periodicity: $periodicity)';
+    return 'HotelkaModel(email: $email, name: $name, description: $description, references: $references, category: $category, isImportant: $isImportant, isDone: $isDone, date: $date, periodicity: $periodicity)';
   }
 
   @override
@@ -214,11 +246,14 @@ class _$HotelkaModelImpl implements _HotelkaModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HotelkaModelImpl &&
+            (identical(other.email, email) || other.email == email) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
                 other.description == description) &&
             const DeepCollectionEquality()
                 .equals(other.references, references) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
             (identical(other.isImportant, isImportant) ||
                 other.isImportant == isImportant) &&
             (identical(other.isDone, isDone) || other.isDone == isDone) &&
@@ -231,9 +266,11 @@ class _$HotelkaModelImpl implements _HotelkaModel {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      email,
       name,
       description,
       const DeepCollectionEquality().hash(references),
+      category,
       isImportant,
       isDone,
       date,
@@ -255,9 +292,11 @@ class _$HotelkaModelImpl implements _HotelkaModel {
 
 abstract class _HotelkaModel implements HotelkaModel {
   factory _HotelkaModel(
-      {required final String name,
+      {required final String email,
+      required final String name,
       required final String description,
       required final dynamic references,
+      required final String category,
       required final bool isImportant,
       required final bool isDone,
       required final String date,
@@ -267,11 +306,15 @@ abstract class _HotelkaModel implements HotelkaModel {
       _$HotelkaModelImpl.fromJson;
 
   @override
+  String get email;
+  @override
   String get name;
   @override
   String get description;
   @override
   dynamic get references;
+  @override
+  String get category;
   @override
   bool get isImportant;
   @override

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:scalable_flutter_app_starter/feature/creating_hotelka/logic/creating_hotelka_notifier.dart';
 
 import '../../../../core/localization/generated/l10n.dart';
+import '../../../auth/logic/bloc/auth_bloc.dart';
 import '../widget/creating_hotelka_components.dart';
 
 class CreatingHotelkaPage extends StatelessWidget {
@@ -48,7 +49,11 @@ class _CreatingHotelkaFloating extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
-      onPressed: () => context.pop(),
+      onPressed: () {
+        final user = context.read<AuthBloc>().state.user!;
+        final hotelka = context.read<CreatingHotelkaNotifier>().hotelkaModel(user.partnerEmail!);
+        context.pop(hotelka);
+      },
       label: Text(S.of(context).createHotelka),
     );
   }

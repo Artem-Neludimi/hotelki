@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scalable_flutter_app_starter/core/logger/loggy_types.dart';
 import 'package:scalable_flutter_app_starter/core/services/api/model/hotelka/hotelka_model.dart';
 import 'package:scalable_flutter_app_starter/core/services/api/model/user/user_model.dart';
-import 'package:scalable_flutter_app_starter/feature/home/data/home_respository.dart';
+import 'package:scalable_flutter_app_starter/feature/home/data/home_repository.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
@@ -47,6 +47,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> with BlocLoggy {
   Future<void> _createHotelka(CreateHotelka event, Emitter<HomeState> emit) async {
     try {
       _repository.createHotelka(event.hotelkaModel);
+      loggy.info('hotelkaModel: ${event.hotelkaModel}');
     } catch (e, s) {
       loggy.error(e, s);
       emit(HomeError(e.toString()));

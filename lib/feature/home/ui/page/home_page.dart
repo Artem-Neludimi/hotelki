@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:scalable_flutter_app_starter/core/extension/context.dart';
+import 'package:scalable_flutter_app_starter/core/services/api/model/hotelka/hotelka_model.dart';
 
 import '../../../../core/navigation/route.dart';
 import '../../../auth/logic/bloc/auth_bloc.dart';
@@ -39,7 +40,11 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => AppRoute.creatingHotelka.push(context),
+        onPressed: () => AppRoute.creatingHotelka.push(context).then((value) {
+          if (value is HotelkaModel) {
+            context.read<HomeBloc>().add(CreateHotelka(value));
+          }
+        }),
         child: const Icon(Icons.add),
       ),
       body: const _HomeBody(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scalable_flutter_app_starter/core/services/api/model/hotelka/hotelka_model.dart';
 
 import '../../../core/localization/generated/l10n.dart';
 
@@ -55,6 +56,18 @@ class CreatingHotelkaNotifier extends ChangeNotifier {
     categoryController.text = pickedCategory;
     notifyListeners();
   }
+
+  HotelkaModel hotelkaModel(String email) => HotelkaModel(
+        email: email,
+        name: nameController.text,
+        description: descriptionController.text,
+        references: referencesController.text,
+        category: categoryController.text,
+        isDone: false,
+        isImportant: isImportant,
+        periodicity: '',
+        date: DateTime.now().toUtc().toIso8601String(),
+      );
 
   @override
   void dispose() {

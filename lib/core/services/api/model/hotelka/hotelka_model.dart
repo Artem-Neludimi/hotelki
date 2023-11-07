@@ -6,9 +6,11 @@ part 'hotelka_model.g.dart';
 @freezed
 class HotelkaModel with _$HotelkaModel {
   factory HotelkaModel({
+    required String email,
     required String name,
     required String description,
     required dynamic references,
+    required String category,
     required bool isImportant,
     required bool isDone,
     required String date,
