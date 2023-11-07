@@ -16,6 +16,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> with BlocLoggy {
       (event, emit) => switch (event) {
         Started() => _onStarted(event, emit),
         OnHotelkaItemTap() => _onHotelkaItemTap(event, emit),
+        CreateHotelka() => _createHotelka(event, emit),
       },
     );
   }
@@ -41,6 +42,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> with BlocLoggy {
     //   hotelkaItems[event.index].$3,
     // );
     // emit(HomeLoaded(hotelkaItems));
+  }
+
+  Future<void> _createHotelka(CreateHotelka event, Emitter<HomeState> emit) async {
+    try {
+      _repository.createHotelka(event.hotelkaModel);
+    } catch (e, s) {
+      loggy.error(e, s);
+      emit(HomeError(e.toString()));
+    }
   }
 }
 

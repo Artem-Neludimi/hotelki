@@ -11,6 +11,7 @@ abstract interface class FirebaseFirestoreService {
   Future<UserModel?> createUser(String email);
   Future<void> boundAccounts(String email, String partnerEmail);
   Future<List<HotelkaModel>> getHotelkaModels(String email);
+  Future<void> createHotelka(HotelkaModel hotelkaModel);
 }
 
 final class FirebaseFirestoreServiceImpl with ServiceLoggy implements FirebaseFirestoreService {
@@ -77,6 +78,16 @@ final class FirebaseFirestoreServiceImpl with ServiceLoggy implements FirebaseFi
       return hotelkaModels;
     } catch (e, s) {
       loggy.error('getHotelkaModels error', e, s);
+      rethrow;
+    }
+  }
+  
+  @override
+  Future<void> createHotelka(HotelkaModel hotelkaModel) {
+    try {
+      return _hotelki.add(hotelkaModel.toJson());
+    } catch (e, s) {
+      loggy.error('createHotelka error', e, s);
       rethrow;
     }
   }
