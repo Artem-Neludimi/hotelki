@@ -47,10 +47,10 @@
 		<key>CFBundleTypeRole</key>
 		<string>Editor</string>
 		<key>CFBundleURLName</key>
-		<string>com.example.myapp</string> <!-- This is typically your app's bundle ID -->
+		<string>com.example.hotelki</string> <!-- This is typically your app's bundle ID -->
 		<key>CFBundleURLSchemes</key>
 		<array>
-		<string>myapp</string> <!-- This is your app's custom URL scheme -->
+		<string>hotelki</string> <!-- This is your app's custom URL scheme -->
 		</array>
 	</dict>
 	</array>

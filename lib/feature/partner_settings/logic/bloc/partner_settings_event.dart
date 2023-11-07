@@ -4,7 +4,8 @@ part of 'partner_settings_bloc.dart';
 sealed class PartnerSettingsEvent {}
 
 class StartedEventPartnerSettings extends PartnerSettingsEvent {
-  final String? partnerEmail;
+  final String? linkEmail;
+  final UserModel user;
 
-  StartedEventPartnerSettings(this.partnerEmail);
+  StartedEventPartnerSettings(this.linkEmail, this.user);
 }

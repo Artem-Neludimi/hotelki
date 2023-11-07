@@ -39,38 +39,38 @@ class _AuthPageState extends State<AuthPage> {
                 child: SafeArea(
                   child: Padding(
                     padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const Spacer(),
-                        Text(
-                          _isSignUp ? 'Sign up to continue' : 'Sign in to continue',
-                          style: context.textTheme.titleLarge,
-                        ),
-                        const SizedBox(height: 16),
-                        InputField.email(
-                          controller: _emailController,
-                        ),
-                        const SizedBox(height: 16),
-                        InputField.password(
-                          controller: _passwordController,
-                          textInputAction: TextInputAction.done,
-                          onFieldSubmitted: (_) => _submit(),
-                        ),
-                        const SizedBox(height: 32),
-                        ElevatedButton(
-                          onPressed: _submit,
-                          child: Text(_isSignUp ? 'Sign Up' : 'Sign In'),
-                        ),
-                        const SizedBox(height: 8),
-                        LabeledTextButton(
-                          label: _isSignUp ? 'Already have an account?' : 'Don\'t have an account?',
-                          action: _isSignUp ? 'Sign in' : 'Sign up',
-                          onTap: () => setState(() => _isSignUp = !_isSignUp),
-                        ),
-                        Center(child: Text(S.of(context).english)),
-                        const Spacer(),
-                      ],
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            _isSignUp ? 'Sign up to continue' : 'Sign in to continue',
+                            style: context.textTheme.titleLarge,
+                          ),
+                          const SizedBox(height: 16),
+                          InputField.email(
+                            controller: _emailController,
+                          ),
+                          const SizedBox(height: 16),
+                          InputField.password(
+                            controller: _passwordController,
+                            textInputAction: TextInputAction.done,
+                            onFieldSubmitted: (_) => _submit(),
+                          ),
+                          const SizedBox(height: 32),
+                          ElevatedButton(
+                            onPressed: _submit,
+                            child: Text(_isSignUp ? 'Sign Up' : 'Sign In'),
+                          ),
+                          const SizedBox(height: 8),
+                          LabeledTextButton(
+                            label: _isSignUp ? 'Already have an account?' : 'Don\'t have an account?',
+                            action: _isSignUp ? 'Sign in' : 'Sign up',
+                            onTap: () => setState(() => _isSignUp = !_isSignUp),
+                          ),
+                          Center(child: Text(S.of(context).english)),
+                        ],
+                      ),
                     ),
                   ),
                 ),

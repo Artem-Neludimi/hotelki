@@ -53,9 +53,12 @@ final class FirebaseFirestoreServiceImpl with ServiceLoggy implements FirebaseFi
   @override
   Future<void> boundAccounts(String email, String partnerEmail) async {
     try {
-      final userQuery = _users.where(FirestoreKeys.email, isEqualTo: email);
-      final querySnapshot = await userQuery.get();
-      if (querySnapshot.docs.isNotEmpty) {}
+      final firstUser = await _users.where(FirestoreKeys.email, isEqualTo: email).get();
+      final secondUser = await _users.where(FirestoreKeys.email, isEqualTo: partnerEmail).get();
+      await _firestore.runTransaction((transaction) async {
+        transaction.update(firstUser.docs.first.reference, {FirestoreKeys.partnerEmail: partnerEmail});
+        transaction.update(secondUser.docs.first.reference, {FirestoreKeys.partnerEmail: email});
+      });
     } catch (e, s) {
       loggy.error('getCurrentUser error', e, s);
       rethrow;

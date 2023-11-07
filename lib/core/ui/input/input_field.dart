@@ -94,8 +94,7 @@ class _InputFieldState extends State<InputField> {
 
   @override
   Widget build(BuildContext context) {
-    final validator =
-        widget.validator ?? Validators.getValidator(widget.keyboardType);
+    final validator = widget.validator ?? Validators.getValidator(widget.keyboardType);
 
     return TextFormField(
       controller: widget.controller,
@@ -105,14 +104,13 @@ class _InputFieldState extends State<InputField> {
       validator: validator,
       autofillHints: widget.autofillHints,
       onFieldSubmitted: widget.onFieldSubmitted,
+      onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
       decoration: InputDecoration(
         labelText: widget.label,
         suffixIcon: _isPassword
             ? IconButton(
                 onPressed: () => setState(() => _obscureText = !_obscureText),
-                icon: _obscureText
-                    ? const Icon(Icons.visibility_off)
-                    : const Icon(Icons.visibility_sharp),
+                icon: _obscureText ? const Icon(Icons.visibility_off) : const Icon(Icons.visibility_sharp),
               )
             : null,
       ),

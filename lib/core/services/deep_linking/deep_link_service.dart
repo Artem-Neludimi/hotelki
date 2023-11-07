@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:go_router/go_router.dart';
+import 'package:scalable_flutter_app_starter/core/extension/string.dart';
 import 'package:scalable_flutter_app_starter/core/logger/loggy_types.dart';
 import 'package:scalable_flutter_app_starter/core/navigation/route.dart';
 import 'package:uni_links/uni_links.dart';
@@ -46,8 +47,9 @@ class DeepLinkServiceImpl with ServiceLoggy implements DeepLinkService {
 
   void _onDeepLinkListen(Uri? uri) async {
     loggy.info('got a new deep link - $uri');
-    if (uri != null) {
-      _router.go(AppRoute.settings.path);
+    final email = uri?.authority;
+    if (uri != null && email != null && email.isValidEmail()) {
+      _router.go(AppRoute.partnerSettings.path, extra: {'linkEmail': email});
     }
   }
 
