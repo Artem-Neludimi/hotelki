@@ -1,12 +1,17 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:scalable_flutter_app_starter/core/logger/loggy_types.dart';
+import 'package:scalable_flutter_app_starter/core/services/api/model/hotelka/hotelka_model.dart';
 import 'package:scalable_flutter_app_starter/core/services/api/model/user/user_model.dart';
+import 'package:scalable_flutter_app_starter/feature/home/data/home_respository.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
 
-class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc() : super(const HomeInitial()) {
+class HomeBloc extends Bloc<HomeEvent, HomeState> with BlocLoggy {
+  final HomeRepository _repository;
+
+  HomeBloc(this._repository) : super(const HomeInitial()) {
     on<HomeEvent>(
       (event, emit) => switch (event) {
         Started() => _onStarted(event, emit),
@@ -16,20 +21,26 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
   Future<void> _onStarted(Started event, Emitter<HomeState> emit) async {
     if (event.user.partnerEmail == null) {
-      emit(const HomeNoPartner());
-    } else {
-      emit(const HomeLoaded(mockHotelkaItems));
+      return emit(const HomeNoPartner());
+    }
+    try {
+      final hotelki = await _repository.getHotelkaModels(event.user.email);
+      loggy.info('hotelki: $hotelki');
+      emit(HomeLoaded(hotelki));
+    } catch (e, s) {
+      loggy.error(e, s);
+      emit(HomeError(e.toString()));
     }
   }
 
   Future<void> _onHotelkaItemTap(OnHotelkaItemTap event, Emitter<HomeState> emit) async {
     final hotelkaItems = [...state.hotelkaItems];
-    hotelkaItems[event.index] = (
-      hotelkaItems[event.index].$1,
-      !hotelkaItems[event.index].$2,
-      hotelkaItems[event.index].$3,
-    );
-    emit(HomeLoaded(hotelkaItems));
+    // hotelkaItems[event.index] = (
+    //   hotelkaItems[event.index].$1,
+    //   !hotelkaItems[event.index].$2,
+    //   hotelkaItems[event.index].$3,
+    // );
+    // emit(HomeLoaded(hotelkaItems));
   }
 }
 

@@ -4,12 +4,13 @@ part of 'home_bloc.dart';
 sealed class HomeState {
   const HomeState(this._hotelkaItems);
 
-  final List<(String, bool, bool)>? _hotelkaItems;
-  List<(String, bool, bool)> get hotelkaItems => _hotelkaItems!;
+  final List<HotelkaModel>? _hotelkaItems;
+  List<HotelkaModel> get hotelkaItems => _hotelkaItems!;
 
-  double get percentHotelkaItemsDone {
-    final done = _hotelkaItems!.where((item) => item.$2).length;
+  double? get percentHotelkaItemsDone {
+    final done = _hotelkaItems!.where((item) => item.isDone).length;
     final total = _hotelkaItems!.length;
+    if (total == 0) return null;
     return done / total;
   }
 }
@@ -24,4 +25,10 @@ final class HomeLoaded extends HomeState {
 
 final class HomeNoPartner extends HomeState {
   const HomeNoPartner() : super(null);
+}
+
+final class HomeError extends HomeState {
+  const HomeError(this.error) : super(null);
+
+  final String error;
 }

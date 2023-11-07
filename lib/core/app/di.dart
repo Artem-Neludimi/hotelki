@@ -8,6 +8,7 @@ import 'package:scalable_flutter_app_starter/core/services/firebase/auth/firebas
 import 'package:scalable_flutter_app_starter/core/services/firebase/firestore/firebase_firestore_service.dart';
 import 'package:scalable_flutter_app_starter/core/services/storage/local_storage_service.dart';
 import 'package:scalable_flutter_app_starter/feature/auth/data/auth_repository.dart';
+import 'package:scalable_flutter_app_starter/feature/home/data/home_respository.dart';
 import 'package:scalable_flutter_app_starter/feature/partner_settings/data/partner_settings_repository.dart';
 
 import '../../feature/auth/logic/bloc/auth_bloc.dart';
@@ -76,6 +77,11 @@ class _RepositoryDI extends StatelessWidget {
           create: (context) => AuthRepositoryImpl(
             context.read<FirebaseFirestoreService>(),
             context.read<FirebaseAuthService>(),
+          ),
+        ),
+        RepositoryProvider<HomeRepository>(
+          create: (context) => HomeRepositoryImpl(
+            context.read<FirebaseFirestoreService>(),
           ),
         ),
         RepositoryProvider<PartnerSettingsRepository>(

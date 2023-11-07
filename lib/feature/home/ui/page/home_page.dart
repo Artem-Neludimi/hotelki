@@ -74,6 +74,7 @@ class _HomeBody extends StatelessWidget {
           );
         }
         if (state is! HomeLoaded) return const Center(child: CircularProgressIndicator());
+        if (state.hotelkaItems.isEmpty) return const Center(child: Text('Для вас пока нет хотелок'));
 
         return Padding(
           padding: const EdgeInsets.all(16),
@@ -112,13 +113,13 @@ class _HomeBody extends StatelessWidget {
                             width: 2,
                           ),
                         ),
-                        child: item.$2 ? Icon(Icons.check, color: context.colorScheme.onSecondary) : null,
+                        child: item.isDone ? Icon(Icons.check, color: context.colorScheme.onSecondary) : null,
                       ),
                       title: Row(
                         children: [
-                          Text(item.$1),
+                          Text(item.name),
                           const Gap(8),
-                          if (item.$3) Icon(Icons.star, color: context.colorScheme.tertiary),
+                          if (item.isImportant) Icon(Icons.star, color: context.colorScheme.tertiary),
                         ],
                       ),
                     );

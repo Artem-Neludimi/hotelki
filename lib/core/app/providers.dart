@@ -5,6 +5,7 @@ import 'package:scalable_flutter_app_starter/feature/creating_hotelka/logic/crea
 import 'package:scalable_flutter_app_starter/feature/home/logic/bloc/home_bloc.dart';
 import 'package:scalable_flutter_app_starter/feature/partner_settings/logic/bloc/partner_settings_bloc.dart';
 
+import '../../feature/home/data/home_respository.dart';
 import '../../feature/partner_settings/data/partner_settings_repository.dart';
 
 class AuthorizedRouterProvider extends StatelessWidget {
@@ -37,7 +38,9 @@ class HomeProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeBloc(),
+      create: (context) => HomeBloc(
+        context.read<HomeRepository>(),
+      ),
       child: child,
     );
   }
