@@ -58,5 +58,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>$hotelki would like to access your photo library</string>
+	<key>NSCameraUsageDescription</key>
+	<string>$hotelki would like to access your camera</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>$hotelki would like to access your microphone</string>
 </dict>
 </plist>

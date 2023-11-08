@@ -6,6 +6,7 @@ import 'package:scalable_flutter_app_starter/core/navigation/router.dart';
 import 'package:scalable_flutter_app_starter/core/services/deep_linking/deep_link_service.dart';
 import 'package:scalable_flutter_app_starter/core/services/firebase/auth/firebase_auth_service.dart';
 import 'package:scalable_flutter_app_starter/core/services/firebase/firestore/firebase_firestore_service.dart';
+import 'package:scalable_flutter_app_starter/core/services/pick_image/pick_image_service.dart';
 import 'package:scalable_flutter_app_starter/core/services/storage/local_storage_service.dart';
 import 'package:scalable_flutter_app_starter/feature/auth/data/auth_repository.dart';
 import 'package:scalable_flutter_app_starter/feature/home/data/home_repository.dart';
@@ -57,6 +58,9 @@ class _ServiceDI extends StatelessWidget {
         ),
         RepositoryProvider<DeepLinkService>(
           create: (context) => DeepLinkServiceImpl(router),
+        ),
+        RepositoryProvider<ImagePickerService>(
+          create: (context) => ImagePickerServiceImpl(),
         ),
       ],
       child: child,

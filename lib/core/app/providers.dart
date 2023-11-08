@@ -7,6 +7,7 @@ import 'package:scalable_flutter_app_starter/feature/partner_settings/logic/bloc
 
 import '../../feature/home/data/home_repository.dart';
 import '../../feature/partner_settings/data/partner_settings_repository.dart';
+import '../services/pick_image/pick_image_service.dart';
 
 class AuthorizedRouterProvider extends StatelessWidget {
   const AuthorizedRouterProvider({super.key, required this.child});
@@ -54,7 +55,9 @@ class CreatingHotelkaProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => CreatingHotelkaNotifier(),
+      create: (context) => CreatingHotelkaNotifier(
+        context.read<ImagePickerService>(), 
+      ),
       child: child,
     );
   }

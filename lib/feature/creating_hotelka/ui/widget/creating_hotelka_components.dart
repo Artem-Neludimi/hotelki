@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:scalable_flutter_app_starter/core/extension/context.dart';
+import 'package:scalable_flutter_app_starter/feature/creating_hotelka/ui/widget/images_list_view.dart';
 
 import '../../../../core/localization/generated/l10n.dart';
 import '../../logic/creating_hotelka_notifier.dart';
@@ -88,28 +89,42 @@ class ReferencesCreatingHotelkaField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Gap(8),
         _TextFieldElement(
           controller: context.read<CreatingHotelkaNotifier>().referencesController,
-          middleWidget: Container(
-            width: 70,
-            height: 70,
-            padding: const EdgeInsets.all(23),
-            decoration: BoxDecoration(
-              color: context.colorScheme.primaryContainer,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: context.colorScheme.onSecondary,
-              ),
-              child: Icon(Icons.add, color: context.colorScheme.onPrimary),
-            ),
-          ),
           title: S.of(context).references,
           hint: S.of(context).references,
           suffixIcon: const Icon(Icons.link),
+          middleWidget: SizedBox(
+            height: 70,
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: () => context.read<CreatingHotelkaNotifier>().addReferenceImagePath(),
+                  child: Container(
+                    width: 70,
+                    padding: const EdgeInsets.all(23),
+                    decoration: BoxDecoration(
+                      color: context.colorScheme.primaryContainer,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: context.watch<CreatingHotelkaNotifier>().imagePickerLoading
+                        ? CircularProgressIndicator.adaptive(
+                            valueColor: AlwaysStoppedAnimation(context.colorScheme.onPrimary),
+                          )
+                        : Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: context.colorScheme.onSecondary,
+                            ),
+                            child: Icon(Icons.add, color: context.colorScheme.onPrimary),
+                          ),
+                  ),
+                ),
+                const Gap(8),
+                const ImagesListView()
+              ],
+            ),
+          ),
         ),
       ],
     );
@@ -169,22 +184,11 @@ class CategoryCreatingHotelkaField extends StatelessWidget {
 
     return Column(
       children: [
-        ListenableBuilder(
-          listenable: readNotifier.categoryController,
-          builder: (context, _) {
-            return _TextFieldElement(
-              controller: readNotifier.categoryController,
-              isRequired: true,
-              hint: S.of(context).movies,
-              title: S.of(context).category,
-              suffixIcon: watchNotifier.isNewCategory
-                  ? IconButton(
-                      icon: const Icon(Icons.add),
-                      onPressed: readNotifier.addNewCategory,
-                    )
-                  : null,
-            );
-          },
+        _TextFieldElement(
+          controller: readNotifier.categoryController,
+          isRequired: true,
+          hint: S.of(context).movies,
+          title: S.of(context).category,
         ),
         const Gap(16),
         SizedBox(
