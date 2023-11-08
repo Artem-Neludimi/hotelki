@@ -6,6 +6,7 @@ sealed class HomeState {
 
   final List<HotelkaModel>? _hotelkaItems;
   List<HotelkaModel> get hotelkaItems => _hotelkaItems!;
+  List<String> get activeCategories => _hotelkaItems!.map((item) => item.category).toSet().toList();
 
   double? get percentHotelkaItemsDone {
     final done = _hotelkaItems!.where((item) => item.isDone).length;

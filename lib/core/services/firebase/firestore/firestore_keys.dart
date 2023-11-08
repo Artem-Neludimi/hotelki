@@ -5,4 +5,5 @@ abstract class FirestoreKeys {
   static String email = 'email';
   static String partnerEmail = 'partnerEmail';
   static String hotelki = 'hotelki';
+  static String categories = 'categories';
 }

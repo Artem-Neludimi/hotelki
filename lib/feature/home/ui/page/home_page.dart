@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:scalable_flutter_app_starter/core/extension/context.dart';
 import 'package:scalable_flutter_app_starter/core/services/api/model/hotelka/hotelka_model.dart';
+import 'package:scalable_flutter_app_starter/feature/home/ui/widget/category_item.dart';
 
 import '../../../../core/navigation/route.dart';
 import '../../../auth/logic/bloc/auth_bloc.dart';
@@ -28,6 +29,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = context.watch<AuthBloc>().state.user!;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Хотелки мне'),
@@ -39,14 +41,16 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => AppRoute.creatingHotelka.push(context).then((value) {
-          if (value is HotelkaModel) {
-            context.read<HomeBloc>().add(CreateHotelka(value));
-          }
-        }),
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: user.partnerEmail == null
+          ? null
+          : FloatingActionButton(
+              onPressed: () => AppRoute.creatingHotelka.push(context).then((value) {
+                if (value is HotelkaModel) {
+                  context.read<HomeBloc>().add(CreateHotelka(value));
+                }
+              }),
+              child: const Icon(Icons.add),
+            ),
       body: const _HomeBody(),
     );
   }
@@ -86,6 +90,14 @@ class _HomeBody extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(
+                height: 110,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: state.activeCategories.length,
+                  itemBuilder: (context, index) => CategoryItem(title: state.activeCategories[index]),
+                ),
+              ),
               const Gap(16),
               LinearProgressIndicator(
                 minHeight: 6,

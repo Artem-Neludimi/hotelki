@@ -3,6 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:scalable_flutter_app_starter/core/logger/loggy_types.dart';
 import 'package:scalable_flutter_app_starter/core/services/api/model/hotelka/hotelka_model.dart';
 import 'package:scalable_flutter_app_starter/core/services/api/model/user/user_model.dart';
+import 'package:scalable_flutter_app_starter/core/services/firebase/firestore/data/default_categories.dart';
+
+import '../../api/model/category/category_model.dart';
 
 part 'firestore_keys.dart';
 
@@ -12,6 +15,9 @@ abstract interface class FirebaseFirestoreService {
   Future<void> boundAccounts(String email, String partnerEmail);
   Future<List<HotelkaModel>> getHotelkaModels(String email);
   Future<void> createHotelka(HotelkaModel hotelkaModel);
+  Future<List<CategoryModel>> getCategories(String category, String email);
+  Future<bool> isExistCategory(String category, String email);
+  Future<void> createCategory(CategoryModel categoryModel, String email);
 }
 
 final class FirebaseFirestoreServiceImpl with ServiceLoggy implements FirebaseFirestoreService {
@@ -20,6 +26,7 @@ final class FirebaseFirestoreServiceImpl with ServiceLoggy implements FirebaseFi
   final _firestore = FirebaseFirestore.instance;
   late final _users = _firestore.collection(FirestoreKeys.users);
   late final _hotelki = _firestore.collection(FirestoreKeys.hotelki);
+  late final _categories = _firestore.collection(FirestoreKeys.categories);
 
   @override
   Future<UserModel?> getUserByEmail(String email) async {
@@ -43,7 +50,13 @@ final class FirebaseFirestoreServiceImpl with ServiceLoggy implements FirebaseFi
       final userQuery = _users.where(FirestoreKeys.email, isEqualTo: email);
       final querySnapshot = await userQuery.get();
       if (querySnapshot.docs.isEmpty) {
-        await _users.add(UserModel(email: email).toJson());
+        await _firestore.runTransaction((transaction) async {
+          transaction.set(_users.doc(), UserModel(email: email).toJson());
+          for (var category in DefaultCategories.buildCategories(email)) {
+            transaction.set(_categories.doc(), category.toJson());
+            loggy.info('category: ${category.toJson()}');
+          }
+        });
       }
       final querySnapshotAgain = await userQuery.get();
       final userData = querySnapshotAgain.docs.first.data();
@@ -81,7 +94,7 @@ final class FirebaseFirestoreServiceImpl with ServiceLoggy implements FirebaseFi
       rethrow;
     }
   }
-  
+
   @override
   Future<void> createHotelka(HotelkaModel hotelkaModel) {
     try {
@@ -90,5 +103,23 @@ final class FirebaseFirestoreServiceImpl with ServiceLoggy implements FirebaseFi
       loggy.error('createHotelka error', e, s);
       rethrow;
     }
+  }
+
+  @override
+  Future<List<CategoryModel>> getCategories(String category, String email) {
+    // TODO: implement getCategories
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> isExistCategory(String category, String email) {
+    // TODO: implement isExistCategory
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> createCategory(CategoryModel categoryModel, String email) {
+    // TODO: implement createCategory
+    throw UnimplementedError();
   }
 }
