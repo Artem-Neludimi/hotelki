@@ -117,7 +117,7 @@ class DateCreatingHotelkaField extends StatelessWidget {
       children: [
         _DateChip(S.of(context).date, Icons.date_range_sharp),
         const Gap(16),
-        _DateChip(S.of(context).periodicity, Icons.compare_arrows_outlined),
+        _DateChip(S.of(context).periodicity, Icons.timelapse),
       ],
     );
   }
@@ -139,12 +139,12 @@ class _DateChip extends StatelessWidget {
             color: context.colorScheme.onPrimary,
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Stack(
+            alignment: Alignment.centerLeft,
             children: [
               Text(text, style: TextStyle(color: context.colorScheme.onTertiary)),
               const Gap(8),
-              Icon(icon, color: context.colorScheme.onSecondary),
+              Positioned(right: 0, child: Icon(icon, color: context.colorScheme.onSecondary)),
             ],
           )),
     );
