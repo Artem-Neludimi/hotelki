@@ -12,10 +12,8 @@ class CreatingHotelkaNotifier extends ChangeNotifier {
         S.of(context).dates,
         S.of(context).presents,
       ]);
-      _pickedCategory.value = _categories.first;
-      categoryController.text = pickedCategory;
-      _pickedCategory.addListener(pickedCategoryListener);
       notifyListeners();
+      _pickedCategory.addListener(pickedCategoryListener);
     });
   }
 
@@ -57,22 +55,28 @@ class CreatingHotelkaNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  HotelkaModel hotelkaModel(String email) => HotelkaModel(
-        email: email,
-        name: nameController.text,
-        description: descriptionController.text,
-        references: referencesController.text,
-        category: categoryController.text,
-        isDone: false,
-        isImportant: isImportant,
-        periodicity: '',
-        date: DateTime.now().toUtc().toIso8601String(),
-      );
+  HotelkaModel createHotelka(String email) {
+    if (nameController.text.isEmpty || categoryController.text.isEmpty) {
+      throw 'fill required fields';
+    }
+    return HotelkaModel(
+      email: email,
+      name: nameController.text,
+      description: descriptionController.text,
+      references: referencesController.text,
+      category: categoryController.text,
+      isDone: false,
+      isImportant: isImportant,
+      periodicity: '',
+      date: DateTime.now().toUtc().toIso8601String(),
+    );
+  }
 
   @override
   void dispose() {
     nameController.dispose();
     descriptionController.dispose();
+    referencesController.dispose();
     categoryController.dispose();
     super.dispose();
   }

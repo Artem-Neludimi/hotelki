@@ -33,6 +33,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dates": MessageLookupByLibrary.simpleMessage("Свидания"),
         "description": MessageLookupByLibrary.simpleMessage("Описание"),
         "english": MessageLookupByLibrary.simpleMessage("English"),
+        "fillRequiredFields":
+            MessageLookupByLibrary.simpleMessage("Заполните обязательные поля"),
         "flowers": MessageLookupByLibrary.simpleMessage("Цветы"),
         "important": MessageLookupByLibrary.simpleMessage("Важно"),
         "importantDescription": MessageLookupByLibrary.simpleMessage(

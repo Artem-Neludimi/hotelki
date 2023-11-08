@@ -8,14 +8,15 @@ import '../../logic/creating_hotelka_notifier.dart';
 
 class _TextFieldElement extends StatelessWidget {
   const _TextFieldElement({
-    required this.text,
+    this.isRequired = false,
+    required this.title,
     this.middleWidget,
     this.hint,
     this.suffixIcon,
     required this.controller,
   });
-
-  final String text;
+  final bool isRequired;
+  final String title;
   final Widget? middleWidget;
   final String? hint;
   final Widget? suffixIcon;
@@ -26,7 +27,13 @@ class _TextFieldElement extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(text, style: context.textTheme.titleMedium),
+        Row(
+          children: [
+            Text(title, style: context.textTheme.titleMedium),
+            const Gap(2),
+            if (isRequired) Text('*', style: context.textTheme.titleMedium!.copyWith(color: Colors.red)),
+          ],
+        ),
         if (middleWidget != null) ...[
           const Gap(8),
           middleWidget!,
@@ -52,7 +59,8 @@ class NameCreatingHotelkaField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _TextFieldElement(
-      text: S.of(context).name,
+      isRequired: true,
+      title: S.of(context).name,
       hint: S.of(context).bouquetOfRose,
       controller: context.read<CreatingHotelkaNotifier>().nameController,
     );
@@ -65,7 +73,7 @@ class DescriptionCreatingHotelkaField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _TextFieldElement(
-      text: S.of(context).description,
+      title: S.of(context).description,
       hint: S.of(context).bouquetDescription,
       controller: context.read<CreatingHotelkaNotifier>().descriptionController,
     );
@@ -99,7 +107,7 @@ class ReferencesCreatingHotelkaField extends StatelessWidget {
               child: Icon(Icons.add, color: context.colorScheme.onPrimary),
             ),
           ),
-          text: S.of(context).references,
+          title: S.of(context).references,
           hint: S.of(context).references,
           suffixIcon: const Icon(Icons.link),
         ),
@@ -166,7 +174,9 @@ class CategoryCreatingHotelkaField extends StatelessWidget {
           builder: (context, _) {
             return _TextFieldElement(
               controller: readNotifier.categoryController,
-              text: S.of(context).category,
+              isRequired: true,
+              hint: S.of(context).movies,
+              title: S.of(context).category,
               suffixIcon: watchNotifier.isNewCategory
                   ? IconButton(
                       icon: const Icon(Icons.add),

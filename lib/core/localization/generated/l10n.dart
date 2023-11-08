@@ -269,6 +269,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Заполните обязательные поля`
+  String get fillRequiredFields {
+    return Intl.message(
+      'Заполните обязательные поля',
+      name: 'fillRequiredFields',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

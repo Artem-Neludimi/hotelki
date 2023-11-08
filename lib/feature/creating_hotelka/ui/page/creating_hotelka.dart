@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:scalable_flutter_app_starter/core/extension/context.dart';
 import 'package:scalable_flutter_app_starter/feature/creating_hotelka/logic/creating_hotelka_notifier.dart';
 
 import '../../../../core/localization/generated/l10n.dart';
@@ -50,9 +51,16 @@ class _CreatingHotelkaFloating extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
       onPressed: () {
-        final user = context.read<AuthBloc>().state.user!;
-        final hotelka = context.read<CreatingHotelkaNotifier>().hotelkaModel(user.partnerEmail!);
-        context.pop(hotelka);
+        try {
+          final user = context.read<AuthBloc>().state.user!;
+          final hotelka = context.read<CreatingHotelkaNotifier>().createHotelka(user.partnerEmail!);
+          context.pop(hotelka);
+        } catch (e) {
+          if (e == 'fill required fields') {
+            final message = S.of(context).fillRequiredFields;
+            context.showSnackBarMessage(message);
+          }
+        }
       },
       label: Text(S.of(context).createHotelka),
     );
