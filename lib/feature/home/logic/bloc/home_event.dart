@@ -6,8 +6,9 @@ sealed class HomeEvent {
 }
 
 final class Started extends HomeEvent {
-  final UserModel user;
   const Started(this.user);
+
+  final UserModel user;
 }
 
 final class OnHotelkaItemTap extends HomeEvent {
@@ -18,6 +19,6 @@ final class OnHotelkaItemTap extends HomeEvent {
 
 final class CreateHotelka extends HomeEvent {
   const CreateHotelka(this.hotelkaModel);
-  
+
   final HotelkaModel hotelkaModel;
 }

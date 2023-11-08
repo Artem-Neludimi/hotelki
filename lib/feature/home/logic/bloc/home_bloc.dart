@@ -22,6 +22,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> with BlocLoggy {
     );
   }
   Future<void> _onStarted(Started event, Emitter<HomeState> emit) async {
+    emit(const HomeInitial());
     if (event.user.partnerEmail == null) {
       return emit(const HomeNoPartner());
     }
@@ -29,6 +30,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> with BlocLoggy {
       final hotelki = await _repository.getHotelkaModels(event.user.email);
       final categories = await _repository.getCategories(event.user.partnerEmail!);
       loggy.info('hotelki: $hotelki');
+      loggy.info('categories: $categories');
       emit(HomeLoaded(hotelki, categories));
     } catch (e, s) {
       loggy.error(e, s);

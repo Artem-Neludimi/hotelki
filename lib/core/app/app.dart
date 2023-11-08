@@ -61,7 +61,7 @@ class _AppState extends State<_App> {
         : const MaterialApp(
             home: Scaffold(
               body: Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator.adaptive(),
               ),
             ),
           );

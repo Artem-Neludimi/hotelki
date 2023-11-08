@@ -60,7 +60,7 @@ class _PartnerSettingsBody extends StatelessWidget {
 
     return BlocBuilder<PartnerSettingsBloc, PartnerSettingsState>(
       builder: (context, state) {
-        if (state is PartnerSettingsLoading) return const Center(child: CircularProgressIndicator());
+        if (state is PartnerSettingsLoading) return const Center(child: CircularProgressIndicator.adaptive());
         if (state.partnerEmail != null) return Center(child: Text(state.partnerEmail!));
 
         return Center(

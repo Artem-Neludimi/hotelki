@@ -68,6 +68,7 @@ class _HomeBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = context.watch<AuthBloc>().state.user!;
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         if (state is HomeNoPartner) {
@@ -89,7 +90,7 @@ class _HomeBody extends StatelessWidget {
             ),
           );
         }
-        if (state is! HomeLoaded) return const Center(child: CircularProgressIndicator());
+        if (state is! HomeLoaded) return const Center(child: CircularProgressIndicator.adaptive());
         if (state.hotelki.isEmpty) return const Center(child: Text('Для вас пока нет хотелок'));
 
         return Padding(
@@ -122,33 +123,36 @@ class _HomeBody extends StatelessWidget {
               const Gap(16),
               Text(DateFormat('dd.MM.yyyy').format(DateTime.now())),
               Expanded(
-                child: ListView.builder(
-                  itemCount: state.hotelki.length,
-                  itemBuilder: (context, index) {
-                    final item = state.hotelki[index];
-                    return ListTile(
-                      onTap: () => context.read<HomeBloc>().add(OnHotelkaItemTap(index)),
-                      leading: Container(
-                        width: 30,
-                        height: 30,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: context.colorScheme.onSecondary,
-                            width: 2,
+                child: RefreshIndicator.adaptive(
+                  onRefresh: () async => context.read<HomeBloc>().add(Started(user)),
+                  child: ListView.builder(
+                    itemCount: state.hotelki.length,
+                    itemBuilder: (context, index) {
+                      final item = state.hotelki[index];
+                      return ListTile(
+                        onTap: () => context.read<HomeBloc>().add(OnHotelkaItemTap(index)),
+                        leading: Container(
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: context.colorScheme.onSecondary,
+                              width: 2,
+                            ),
                           ),
+                          child: item.isDone ? Icon(Icons.check, color: context.colorScheme.onSecondary) : null,
                         ),
-                        child: item.isDone ? Icon(Icons.check, color: context.colorScheme.onSecondary) : null,
-                      ),
-                      title: Row(
-                        children: [
-                          Text(item.name),
-                          const Gap(8),
-                          if (item.isImportant) Icon(Icons.star, color: context.colorScheme.tertiary),
-                        ],
-                      ),
-                    );
-                  },
+                        title: Row(
+                          children: [
+                            Text(item.name),
+                            const Gap(8),
+                            if (item.isImportant) Icon(Icons.star, color: context.colorScheme.tertiary),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
             ],
