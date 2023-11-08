@@ -12,9 +12,10 @@ final class Started extends HomeEvent {
 }
 
 final class OnHotelkaItemTap extends HomeEvent {
-  const OnHotelkaItemTap(this.index);
+  const OnHotelkaItemTap(this.index, this.user);
 
   final int index;
+  final UserModel user;
 }
 
 final class CreateHotelka extends HomeEvent {

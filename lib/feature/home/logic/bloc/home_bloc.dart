@@ -39,13 +39,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> with BlocLoggy {
   }
 
   Future<void> _onHotelkaItemTap(OnHotelkaItemTap event, Emitter<HomeState> emit) async {
-    final hotelki = [...state.hotelki];
-    final categories = [...state.categories];
-    // hotelkaItems[event.index] = (
-    //   hotelkaItems[event.index].$1,
-    //   !hotelkaItems[event.index].$2,
-    //   hotelkaItems[event.index].$3,
-    // );
+    final hotelkaAndId = state.hotelkaAndIdByIndex(event.index);
+    await _repository.updateHotelka(hotelkaAndId.$2.copyWith(isDone: !hotelkaAndId.$2.isDone), hotelkaAndId.$1);
+    final hotelki = await _repository.getHotelkaModels(event.user.email);
+    final categories = await _repository.getCategories(event.user.partnerEmail!);
+    loggy.info('hotelki: $hotelki');
+    loggy.info('categories: $categories');
     emit(HomeLoaded(hotelki, categories));
   }
 

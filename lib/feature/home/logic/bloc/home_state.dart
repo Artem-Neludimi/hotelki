@@ -4,16 +4,20 @@ part of 'home_bloc.dart';
 sealed class HomeState {
   const HomeState(this._hotelki, this._categories);
 
-  final List<HotelkaModel>? _hotelki;
+  final Map<String, HotelkaModel>? _hotelki;
   final List<CategoryModel>? _categories;
 
-  List<HotelkaModel> get hotelki => _hotelki!;
+  List<HotelkaModel> get hotelki => _hotelki!.values.toList();
   List<CategoryModel> get categories => _categories!;
   List<String> get categoriesString => _categories!.map((item) => item.category).toList();
-  List<String> get activeCategoriesString => _hotelki!.map((item) => item.category).toSet().toList();
+  List<String> get activeCategoriesString => hotelki.map((item) => item.category).toSet().toList();
+  (String, HotelkaModel) hotelkaAndIdByIndex(int index) {
+    final hotelka = hotelki[index];
+    return (_hotelki!.keys.toList()[index], hotelka);
+  }
 
   double? get percentHotelkaItemsDone {
-    final done = _hotelki!.where((item) => item.isDone).length;
+    final done = hotelki.where((item) => item.isDone).length;
     final total = _hotelki!.length;
     if (total == 0) return null;
     return done / total;

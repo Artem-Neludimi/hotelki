@@ -130,7 +130,7 @@ class _HomeBody extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final item = state.hotelki[index];
                       return ListTile(
-                        onTap: () => context.read<HomeBloc>().add(OnHotelkaItemTap(index)),
+                        onTap: () => context.read<HomeBloc>().add(OnHotelkaItemTap(index, user)),
                         leading: Container(
                           width: 30,
                           height: 30,

@@ -4,8 +4,9 @@ import 'package:scalable_flutter_app_starter/core/services/firebase/firestore/fi
 import '../../../core/services/api/model/hotelka/hotelka_model.dart';
 
 abstract interface class HomeRepository {
-  Future<List<HotelkaModel>> getHotelkaModels(String email);
+  Future<Map<String, HotelkaModel>> getHotelkaModels(String email);
   Future<void> createHotelka(HotelkaModel hotelkaModel);
+  Future<void> updateHotelka(HotelkaModel hotelkaModel, String id);
   Future<List<CategoryModel>> getCategories(String partnerEmail);
 }
 
@@ -15,13 +16,18 @@ class HomeRepositoryImpl implements HomeRepository {
   const HomeRepositoryImpl(this._firestore);
 
   @override
-  Future<List<HotelkaModel>> getHotelkaModels(String email) {
+  Future<Map<String, HotelkaModel>> getHotelkaModels(String email) {
     return _firestore.getHotelkaModels(email);
   }
 
   @override
   Future<void> createHotelka(HotelkaModel hotelkaModel) {
     return _firestore.createHotelka(hotelkaModel);
+  }
+
+  @override
+  Future<void> updateHotelka(HotelkaModel hotelkaModel, String id) {
+    return _firestore.updateHotelka(hotelkaModel, id);
   }
 
   @override
