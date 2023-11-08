@@ -6,7 +6,7 @@ import '../../../core/services/api/model/hotelka/hotelka_model.dart';
 abstract interface class HomeRepository {
   Future<List<HotelkaModel>> getHotelkaModels(String email);
   Future<void> createHotelka(HotelkaModel hotelkaModel);
-  Future<List<CategoryModel>> getCategories(String email);
+  Future<List<CategoryModel>> getCategories(String partnerEmail);
 }
 
 class HomeRepositoryImpl implements HomeRepository {
@@ -25,7 +25,7 @@ class HomeRepositoryImpl implements HomeRepository {
   }
 
   @override
-  Future<List<CategoryModel>> getCategories(String email) {
-    return _firestore.getCategories(email);
+  Future<List<CategoryModel>> getCategories(String partnerEmail) {
+    return _firestore.getCategories(partnerEmail);
   }
 }

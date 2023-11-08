@@ -27,7 +27,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> with BlocLoggy {
     }
     try {
       final hotelki = await _repository.getHotelkaModels(event.user.email);
-      final categories = await _repository.getCategories(event.user.email);
+      final categories = await _repository.getCategories(event.user.partnerEmail!);
       loggy.info('hotelki: $hotelki');
       emit(HomeLoaded(hotelki, categories));
     } catch (e, s) {
