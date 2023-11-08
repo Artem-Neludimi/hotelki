@@ -58,7 +58,12 @@ final GoRouter router = GoRouter(
     GoRoute(
       parentNavigatorKey: _routerKey,
       path: AppRoute.creatingHotelka.path,
-      builder: (context, state) => const CreatingHotelkaProvider(child: CreatingHotelkaPage()),
+      builder: (context, state) {
+        final data = state.extra as Map<String, dynamic>;
+        return CreatingHotelkaProvider(
+          child: CreatingHotelkaPage(categoriesString: data['categories'] as List<String>),
+        );
+      },
     ),
     GoRoute(
       parentNavigatorKey: _routerKey,

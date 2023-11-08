@@ -9,8 +9,21 @@ import '../../../../core/localization/generated/l10n.dart';
 import '../../../auth/logic/bloc/auth_bloc.dart';
 import '../widget/creating_hotelka_components.dart';
 
-class CreatingHotelkaPage extends StatelessWidget {
-  const CreatingHotelkaPage({super.key});
+class CreatingHotelkaPage extends StatefulWidget {
+  const CreatingHotelkaPage({super.key, required this.categoriesString});
+
+  final List<String> categoriesString;
+
+  @override
+  State<CreatingHotelkaPage> createState() => _CreatingHotelkaPageState();
+}
+
+class _CreatingHotelkaPageState extends State<CreatingHotelkaPage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<CreatingHotelkaNotifier>().init(widget.categoriesString);
+  }
 
   @override
   Widget build(BuildContext context) {

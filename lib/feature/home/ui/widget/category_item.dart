@@ -16,15 +16,23 @@ class CategoryItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(32),
       ),
       child: Container(
+        padding: const EdgeInsets.all(2),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(32),
           color: context.colorScheme.onSecondary,
         ),
         alignment: Alignment.center,
-        child: FittedBox(
-          child: Text(
-            title,
-            style: context.textTheme.titleMedium!.copyWith(color: context.colorScheme.onPrimary),
+        child: Text(
+          title,
+          textAlign: TextAlign.center,
+          style: context.textTheme.titleMedium!.copyWith(
+            fontSize: switch (title.length) {
+              > 25 => 12,
+              > 50 => 10,
+              > 100 => 8,
+              _ => null,
+            },
+            color: context.colorScheme.onPrimary,
           ),
         ),
       ),

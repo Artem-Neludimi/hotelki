@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scalable_flutter_app_starter/core/logger/loggy_types.dart';
+import 'package:scalable_flutter_app_starter/core/services/api/model/category/category_model.dart';
 import 'package:scalable_flutter_app_starter/core/services/api/model/hotelka/hotelka_model.dart';
 import 'package:scalable_flutter_app_starter/core/services/api/model/user/user_model.dart';
 import 'package:scalable_flutter_app_starter/feature/home/data/home_repository.dart';
@@ -26,8 +27,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> with BlocLoggy {
     }
     try {
       final hotelki = await _repository.getHotelkaModels(event.user.email);
+      final categories = await _repository.getCategories(event.user.email);
       loggy.info('hotelki: $hotelki');
-      emit(HomeLoaded(hotelki));
+      emit(HomeLoaded(hotelki, categories));
     } catch (e, s) {
       loggy.error(e, s);
       emit(HomeError(e.toString()));
@@ -35,13 +37,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> with BlocLoggy {
   }
 
   Future<void> _onHotelkaItemTap(OnHotelkaItemTap event, Emitter<HomeState> emit) async {
-    final hotelkaItems = [...state.hotelkaItems];
+    final hotelki = [...state.hotelki];
+    final categories = [...state.categories];
     // hotelkaItems[event.index] = (
     //   hotelkaItems[event.index].$1,
     //   !hotelkaItems[event.index].$2,
     //   hotelkaItems[event.index].$3,
     // );
-    // emit(HomeLoaded(hotelkaItems));
+    emit(HomeLoaded(hotelki, categories));
   }
 
   Future<void> _createHotelka(CreateHotelka event, Emitter<HomeState> emit) async {

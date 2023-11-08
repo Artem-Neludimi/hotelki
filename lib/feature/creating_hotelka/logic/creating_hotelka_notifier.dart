@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:scalable_flutter_app_starter/core/services/api/model/hotelka/hotelka_model.dart';
 
-import '../../../core/localization/generated/l10n.dart';
-
 class CreatingHotelkaNotifier extends ChangeNotifier {
-  CreatingHotelkaNotifier() {
+  void init(List<String> categories) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _categories.addAll([
-        S.of(context).movies,
-        S.of(context).flowers,
-        S.of(context).dates,
-        S.of(context).presents,
-      ]);
+      _categories.addAll(categories);
       notifyListeners();
       _pickedCategory.addListener(pickedCategoryListener);
     });

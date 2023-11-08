@@ -15,9 +15,7 @@ abstract interface class FirebaseFirestoreService {
   Future<void> boundAccounts(String email, String partnerEmail);
   Future<List<HotelkaModel>> getHotelkaModels(String email);
   Future<void> createHotelka(HotelkaModel hotelkaModel);
-  Future<List<CategoryModel>> getCategories(String category, String email);
-  Future<bool> isExistCategory(String category, String email);
-  Future<void> createCategory(CategoryModel categoryModel, String email);
+  Future<List<CategoryModel>> getCategories(String email);
 }
 
 final class FirebaseFirestoreServiceImpl with ServiceLoggy implements FirebaseFirestoreService {
@@ -96,9 +94,25 @@ final class FirebaseFirestoreServiceImpl with ServiceLoggy implements FirebaseFi
   }
 
   @override
-  Future<void> createHotelka(HotelkaModel hotelkaModel) {
+  Future<void> createHotelka(HotelkaModel hotelkaModel) async {
     try {
-      return _hotelki.add(hotelkaModel.toJson());
+      final userCategoriesQuery = await _categories.where(FirestoreKeys.email, isEqualTo: hotelkaModel.email).get();
+      final userCategories = userCategoriesQuery.docs.map((doc) => CategoryModel.fromJson(doc.data())).toList();
+      final userCategoriesString = userCategories.map((e) => e.category).toList();
+      if (!userCategoriesString.contains(hotelkaModel.category)) {
+        await _firestore.runTransaction((transaction) async {
+          transaction.set(_hotelki.doc(), hotelkaModel.toJson());
+          transaction.set(
+            _categories.doc(),
+            CategoryModel(
+              category: hotelkaModel.category,
+              email: hotelkaModel.email,
+            ).toJson(),
+          );
+        });
+      } else {
+        await _hotelki.add(hotelkaModel.toJson());
+      }
     } catch (e, s) {
       loggy.error('createHotelka error', e, s);
       rethrow;
@@ -106,20 +120,14 @@ final class FirebaseFirestoreServiceImpl with ServiceLoggy implements FirebaseFi
   }
 
   @override
-  Future<List<CategoryModel>> getCategories(String category, String email) {
-    // TODO: implement getCategories
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> isExistCategory(String category, String email) {
-    // TODO: implement isExistCategory
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> createCategory(CategoryModel categoryModel, String email) {
-    // TODO: implement createCategory
-    throw UnimplementedError();
+  Future<List<CategoryModel>> getCategories(String email) async {
+    try {
+      final querySnapshot = await _categories.where(FirestoreKeys.email, isEqualTo: email).get();
+      final categories = querySnapshot.docs.map((doc) => CategoryModel.fromJson(doc.data())).toList();
+      return categories;
+    } catch (e, s) {
+      loggy.error('getCategories error', e, s);
+      rethrow;
+    }
   }
 }

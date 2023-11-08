@@ -30,28 +30,35 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final user = context.watch<AuthBloc>().state.user!;
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Хотелки мне'),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () => AppRoute.settings.push(context),
-            icon: const Icon(Icons.settings),
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Хотелки мне'),
+            centerTitle: true,
+            actions: [
+              IconButton(
+                onPressed: () => AppRoute.settings.push(context),
+                icon: const Icon(Icons.settings),
+              ),
+            ],
           ),
-        ],
-      ),
-      floatingActionButton: user.partnerEmail == null
-          ? null
-          : FloatingActionButton(
-              onPressed: () => AppRoute.creatingHotelka.push(context).then((value) {
-                if (value is HotelkaModel) {
-                  context.read<HomeBloc>().add(CreateHotelka(value));
-                }
-              }),
-              child: const Icon(Icons.add),
-            ),
-      body: const _HomeBody(),
+          floatingActionButton: user.partnerEmail == null
+              ? null
+              : FloatingActionButton(
+                  onPressed: () => AppRoute.creatingHotelka.push(
+                    context,
+                    extra: {"categories": state.categoriesString},
+                  ).then((value) {
+                    if (value is HotelkaModel) {
+                      context.read<HomeBloc>().add(CreateHotelka(value));
+                    }
+                  }),
+                  child: const Icon(Icons.add),
+                ),
+          body: const _HomeBody(),
+        );
+      },
     );
   }
 }
@@ -83,7 +90,7 @@ class _HomeBody extends StatelessWidget {
           );
         }
         if (state is! HomeLoaded) return const Center(child: CircularProgressIndicator());
-        if (state.hotelkaItems.isEmpty) return const Center(child: Text('Для вас пока нет хотелок'));
+        if (state.hotelki.isEmpty) return const Center(child: Text('Для вас пока нет хотелок'));
 
         return Padding(
           padding: const EdgeInsets.all(16),
@@ -92,10 +99,11 @@ class _HomeBody extends StatelessWidget {
             children: [
               SizedBox(
                 height: 110,
-                child: ListView.builder(
+                child: ListView.separated(
                   scrollDirection: Axis.horizontal,
-                  itemCount: state.activeCategories.length,
-                  itemBuilder: (context, index) => CategoryItem(title: state.activeCategories[index]),
+                  itemCount: state.activeCategoriesString.length,
+                  separatorBuilder: (context, index) => const Gap(4),
+                  itemBuilder: (context, index) => CategoryItem(title: state.activeCategoriesString[index]),
                 ),
               ),
               const Gap(16),
@@ -115,9 +123,9 @@ class _HomeBody extends StatelessWidget {
               Text(DateFormat('dd.MM.yyyy').format(DateTime.now())),
               Expanded(
                 child: ListView.builder(
-                  itemCount: state.hotelkaItems.length,
+                  itemCount: state.hotelki.length,
                   itemBuilder: (context, index) {
-                    final item = state.hotelkaItems[index];
+                    final item = state.hotelki[index];
                     return ListTile(
                       onTap: () => context.read<HomeBloc>().add(OnHotelkaItemTap(index)),
                       leading: Container(
