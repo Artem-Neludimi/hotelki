@@ -1,16 +1,11 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:scalable_flutter_app_starter/core/services/api/model/hotelka/hotelka_model.dart';
-
-import '../../../core/services/firebase/storage/firebase_storage_service.dart';
 import '../../../core/services/pick_image/pick_image_service.dart';
 
 class CreatingHotelkaNotifier extends ChangeNotifier {
-  final FirebaseStorageService _firebaseStorage;
   final ImagePickerService _imagePickerService;
 
-  CreatingHotelkaNotifier(this._firebaseStorage, this._imagePickerService);
+  CreatingHotelkaNotifier(this._imagePickerService);
 
   void init(List<String> categories) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -65,30 +60,26 @@ class CreatingHotelkaNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<HotelkaModel> createHotelka(String email) async {
+  (HotelkaModel, List<String>) createHotelkaAndLink(String email) {
     if (nameController.text.isEmpty || categoryController.text.isEmpty) {
       throw 'fill required fields';
     }
-    final futureImagesUrl = <Future<String>>[];
-    final imageUrlList = <String>[];
-    for (var imagePath in _referencesImagesPaths) {
-      final futureUrl = _firebaseStorage.uploadReferencesImage(file: File(imagePath), email: email);
-      futureImagesUrl.add(futureUrl);
-    }
-    imageUrlList.addAll(await Future.wait(futureImagesUrl));
-    return HotelkaModel(
-      email: email,
-      name: nameController.text.trim(),
-      description: descriptionController.text.trim(),
-      category: categoryController.text.trim(),
-      references: ReferencesModel(
-        link: referencesController.text.trim(),
-        imageUrls: imageUrlList,
+    return (
+      HotelkaModel(
+        email: email,
+        name: nameController.text.trim(),
+        description: descriptionController.text.trim(),
+        category: categoryController.text.trim(),
+        references: ReferencesModel(
+          link: referencesController.text.trim(),
+          imageUrls: null,
+        ),
+        isDone: false,
+        isImportant: isImportant,
+        periodicity: '',
+        date: DateTime.now().toUtc().toIso8601String(),
       ),
-      isDone: false,
-      isImportant: isImportant,
-      periodicity: '',
-      date: DateTime.now().toUtc().toIso8601String(),
+      _referencesImagesPaths,
     );
   }
 

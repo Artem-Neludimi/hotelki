@@ -50,8 +50,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> with BlocLoggy {
 
   Future<void> _createHotelka(CreateHotelka event, Emitter<HomeState> emit) async {
     try {
-      _repository.createHotelka(event.hotelkaModel);
-      loggy.info('hotelkaModel: ${event.hotelkaModel}');
+      _repository.createHotelka(event.hotelkaModel, event.referencesImagesPaths);
+      loggy.info('hotelka create: ${event.hotelkaModel}');
     } catch (e, s) {
       loggy.error(e, s);
       emit(HomeError(e.toString()));

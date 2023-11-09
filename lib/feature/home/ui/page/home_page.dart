@@ -50,8 +50,8 @@ class _HomePageState extends State<HomePage> {
                     context,
                     extra: {"categories": state.categoriesString},
                   ).then((value) {
-                    if (value is HotelkaModel) {
-                      context.read<HomeBloc>().add(CreateHotelka(value));
+                    if (value is (HotelkaModel, List<String>)) {
+                      context.read<HomeBloc>().add(CreateHotelka(value.$1, value.$2));
                     }
                   }),
                   child: const Icon(Icons.add),

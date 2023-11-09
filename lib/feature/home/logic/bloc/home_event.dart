@@ -19,7 +19,8 @@ final class OnHotelkaItemTap extends HomeEvent {
 }
 
 final class CreateHotelka extends HomeEvent {
-  const CreateHotelka(this.hotelkaModel);
+  const CreateHotelka(this.hotelkaModel, this.referencesImagesPaths);
 
   final HotelkaModel hotelkaModel;
+  final List<String> referencesImagesPaths;
 }

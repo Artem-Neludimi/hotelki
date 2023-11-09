@@ -65,11 +65,11 @@ class _CreatingHotelkaFloating extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
-      onPressed: () async {
+      onPressed: () {
         try {
           final user = context.read<AuthBloc>().state.user!;
-          final hotelka = await context.read<CreatingHotelkaNotifier>().createHotelka(user.partnerEmail!);
-          context.pop(hotelka);
+          final hotelkaAndLinks = context.read<CreatingHotelkaNotifier>().createHotelkaAndLink(user.partnerEmail!);
+          context.pop(hotelkaAndLinks);
         } catch (e) {
           if (e == 'fill required fields') {
             final message = S.of(context).fillRequiredFields;

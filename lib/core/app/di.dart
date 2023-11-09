@@ -90,6 +90,7 @@ class _RepositoryDI extends StatelessWidget {
         RepositoryProvider<HomeRepository>(
           create: (context) => HomeRepositoryImpl(
             context.read<FirebaseFirestoreService>(),
+            context.read<FirebaseStorageService>(),
           ),
         ),
         RepositoryProvider<PartnerSettingsRepository>(
