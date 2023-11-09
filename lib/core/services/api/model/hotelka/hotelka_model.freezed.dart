@@ -23,7 +23,7 @@ mixin _$HotelkaModel {
   String get email => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
-  dynamic get references => throw _privateConstructorUsedError;
+  ReferencesModel? get references => throw _privateConstructorUsedError;
   String get category => throw _privateConstructorUsedError;
   bool get isImportant => throw _privateConstructorUsedError;
   bool get isDone => throw _privateConstructorUsedError;
@@ -46,12 +46,14 @@ abstract class $HotelkaModelCopyWith<$Res> {
       {String email,
       String name,
       String description,
-      dynamic references,
+      ReferencesModel? references,
       String category,
       bool isImportant,
       bool isDone,
       String date,
       String periodicity});
+
+  $ReferencesModelCopyWith<$Res>? get references;
 }
 
 /// @nodoc
@@ -93,7 +95,7 @@ class _$HotelkaModelCopyWithImpl<$Res, $Val extends HotelkaModel>
       references: freezed == references
           ? _value.references
           : references // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as ReferencesModel?,
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -116,6 +118,18 @@ class _$HotelkaModelCopyWithImpl<$Res, $Val extends HotelkaModel>
               as String,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ReferencesModelCopyWith<$Res>? get references {
+    if (_value.references == null) {
+      return null;
+    }
+
+    return $ReferencesModelCopyWith<$Res>(_value.references!, (value) {
+      return _then(_value.copyWith(references: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -130,12 +144,15 @@ abstract class _$$HotelkaModelImplCopyWith<$Res>
       {String email,
       String name,
       String description,
-      dynamic references,
+      ReferencesModel? references,
       String category,
       bool isImportant,
       bool isDone,
       String date,
       String periodicity});
+
+  @override
+  $ReferencesModelCopyWith<$Res>? get references;
 }
 
 /// @nodoc
@@ -175,7 +192,7 @@ class __$$HotelkaModelImplCopyWithImpl<$Res>
       references: freezed == references
           ? _value.references
           : references // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as ReferencesModel?,
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -201,13 +218,14 @@ class __$$HotelkaModelImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$HotelkaModelImpl implements _HotelkaModel {
-  _$HotelkaModelImpl(
+  const _$HotelkaModelImpl(
       {required this.email,
       required this.name,
       required this.description,
-      required this.references,
+      this.references,
       required this.category,
       required this.isImportant,
       required this.isDone,
@@ -224,7 +242,7 @@ class _$HotelkaModelImpl implements _HotelkaModel {
   @override
   final String description;
   @override
-  final dynamic references;
+  final ReferencesModel? references;
   @override
   final String category;
   @override
@@ -250,8 +268,8 @@ class _$HotelkaModelImpl implements _HotelkaModel {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            const DeepCollectionEquality()
-                .equals(other.references, references) &&
+            (identical(other.references, references) ||
+                other.references == references) &&
             (identical(other.category, category) ||
                 other.category == category) &&
             (identical(other.isImportant, isImportant) ||
@@ -264,17 +282,8 @@ class _$HotelkaModelImpl implements _HotelkaModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      email,
-      name,
-      description,
-      const DeepCollectionEquality().hash(references),
-      category,
-      isImportant,
-      isDone,
-      date,
-      periodicity);
+  int get hashCode => Object.hash(runtimeType, email, name, description,
+      references, category, isImportant, isDone, date, periodicity);
 
   @JsonKey(ignore: true)
   @override
@@ -291,11 +300,11 @@ class _$HotelkaModelImpl implements _HotelkaModel {
 }
 
 abstract class _HotelkaModel implements HotelkaModel {
-  factory _HotelkaModel(
+  const factory _HotelkaModel(
       {required final String email,
       required final String name,
       required final String description,
-      required final dynamic references,
+      final ReferencesModel? references,
       required final String category,
       required final bool isImportant,
       required final bool isDone,
@@ -312,7 +321,7 @@ abstract class _HotelkaModel implements HotelkaModel {
   @override
   String get description;
   @override
-  dynamic get references;
+  ReferencesModel? get references;
   @override
   String get category;
   @override
@@ -326,5 +335,170 @@ abstract class _HotelkaModel implements HotelkaModel {
   @override
   @JsonKey(ignore: true)
   _$$HotelkaModelImplCopyWith<_$HotelkaModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+ReferencesModel _$ReferencesModelFromJson(Map<String, dynamic> json) {
+  return _ReferencesModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ReferencesModel {
+  String? get link => throw _privateConstructorUsedError;
+  List<String>? get imageUrls => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ReferencesModelCopyWith<ReferencesModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ReferencesModelCopyWith<$Res> {
+  factory $ReferencesModelCopyWith(
+          ReferencesModel value, $Res Function(ReferencesModel) then) =
+      _$ReferencesModelCopyWithImpl<$Res, ReferencesModel>;
+  @useResult
+  $Res call({String? link, List<String>? imageUrls});
+}
+
+/// @nodoc
+class _$ReferencesModelCopyWithImpl<$Res, $Val extends ReferencesModel>
+    implements $ReferencesModelCopyWith<$Res> {
+  _$ReferencesModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? link = freezed,
+    Object? imageUrls = freezed,
+  }) {
+    return _then(_value.copyWith(
+      link: freezed == link
+          ? _value.link
+          : link // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageUrls: freezed == imageUrls
+          ? _value.imageUrls
+          : imageUrls // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ReferencesModelImplCopyWith<$Res>
+    implements $ReferencesModelCopyWith<$Res> {
+  factory _$$ReferencesModelImplCopyWith(_$ReferencesModelImpl value,
+          $Res Function(_$ReferencesModelImpl) then) =
+      __$$ReferencesModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? link, List<String>? imageUrls});
+}
+
+/// @nodoc
+class __$$ReferencesModelImplCopyWithImpl<$Res>
+    extends _$ReferencesModelCopyWithImpl<$Res, _$ReferencesModelImpl>
+    implements _$$ReferencesModelImplCopyWith<$Res> {
+  __$$ReferencesModelImplCopyWithImpl(
+      _$ReferencesModelImpl _value, $Res Function(_$ReferencesModelImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? link = freezed,
+    Object? imageUrls = freezed,
+  }) {
+    return _then(_$ReferencesModelImpl(
+      link: freezed == link
+          ? _value.link
+          : link // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageUrls: freezed == imageUrls
+          ? _value._imageUrls
+          : imageUrls // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ReferencesModelImpl implements _ReferencesModel {
+  _$ReferencesModelImpl({this.link, final List<String>? imageUrls})
+      : _imageUrls = imageUrls;
+
+  factory _$ReferencesModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ReferencesModelImplFromJson(json);
+
+  @override
+  final String? link;
+  final List<String>? _imageUrls;
+  @override
+  List<String>? get imageUrls {
+    final value = _imageUrls;
+    if (value == null) return null;
+    if (_imageUrls is EqualUnmodifiableListView) return _imageUrls;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  String toString() {
+    return 'ReferencesModel(link: $link, imageUrls: $imageUrls)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ReferencesModelImpl &&
+            (identical(other.link, link) || other.link == link) &&
+            const DeepCollectionEquality()
+                .equals(other._imageUrls, _imageUrls));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, link, const DeepCollectionEquality().hash(_imageUrls));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ReferencesModelImplCopyWith<_$ReferencesModelImpl> get copyWith =>
+      __$$ReferencesModelImplCopyWithImpl<_$ReferencesModelImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ReferencesModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ReferencesModel implements ReferencesModel {
+  factory _ReferencesModel(
+      {final String? link,
+      final List<String>? imageUrls}) = _$ReferencesModelImpl;
+
+  factory _ReferencesModel.fromJson(Map<String, dynamic> json) =
+      _$ReferencesModelImpl.fromJson;
+
+  @override
+  String? get link;
+  @override
+  List<String>? get imageUrls;
+  @override
+  @JsonKey(ignore: true)
+  _$$ReferencesModelImplCopyWith<_$ReferencesModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -63,10 +65,10 @@ class _CreatingHotelkaFloating extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
-      onPressed: () {
+      onPressed: () async {
         try {
           final user = context.read<AuthBloc>().state.user!;
-          final hotelka = context.read<CreatingHotelkaNotifier>().createHotelka(user.partnerEmail!);
+          final hotelka = await context.read<CreatingHotelkaNotifier>().createHotelka(user.partnerEmail!);
           context.pop(hotelka);
         } catch (e) {
           if (e == 'fill required fields') {

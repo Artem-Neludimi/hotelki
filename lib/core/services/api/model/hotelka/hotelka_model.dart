@@ -5,11 +5,12 @@ part 'hotelka_model.g.dart';
 
 @freezed
 class HotelkaModel with _$HotelkaModel {
-  factory HotelkaModel({
+  @JsonSerializable(explicitToJson: true)
+  const factory HotelkaModel({
     required String email,
     required String name,
     required String description,
-    required dynamic references,
+    ReferencesModel? references,
     required String category,
     required bool isImportant,
     required bool isDone,
@@ -18,4 +19,14 @@ class HotelkaModel with _$HotelkaModel {
   }) = _HotelkaModel;
 
   factory HotelkaModel.fromJson(Map<String, dynamic> json) => _$HotelkaModelFromJson(json);
+}
+
+@freezed
+class ReferencesModel with _$ReferencesModel {
+  factory ReferencesModel({
+    String? link,
+    List<String>? imageUrls,
+  }) = _ReferencesModel;
+
+  factory ReferencesModel.fromJson(Map<String, dynamic> json) => _$ReferencesModelFromJson(json);
 }
