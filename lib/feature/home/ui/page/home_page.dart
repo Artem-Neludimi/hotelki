@@ -145,11 +145,12 @@ class _HomeBody extends StatelessWidget {
                         ),
                         title: Row(
                           children: [
-                            Text(item.name),
+                            Text(item.name, style: context.textTheme.titleMedium!),
                             const Gap(8),
                             if (item.isImportant) Icon(Icons.star, color: context.colorScheme.tertiary),
                           ],
                         ),
+                        subtitle: item.description.isEmpty ? null : Text(item.description),
                       );
                     },
                   ),
