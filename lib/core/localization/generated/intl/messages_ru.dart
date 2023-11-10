@@ -40,6 +40,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "important": MessageLookupByLibrary.simpleMessage("Важно"),
         "importantDescription": MessageLookupByLibrary.simpleMessage(
             "Ставьте галочку только если эта хотелка критически важна"),
+        "link": MessageLookupByLibrary.simpleMessage("Ссылка"),
         "linkCopied":
             MessageLookupByLibrary.simpleMessage("Ссылка скопирована"),
         "movies": MessageLookupByLibrary.simpleMessage("Фильмы"),

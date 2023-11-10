@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:scalable_flutter_app_starter/feature/creating_hotelka/logic/creating_hotelka_notifier.dart';
 import 'package:scalable_flutter_app_starter/feature/home/logic/bloc/home_bloc.dart';
+import 'package:scalable_flutter_app_starter/feature/home/logic/story_notifier.dart';
 import 'package:scalable_flutter_app_starter/feature/partner_settings/logic/bloc/partner_settings_bloc.dart';
 
 import '../../feature/home/data/home_repository.dart';
@@ -74,6 +75,20 @@ class PartnerSettingsProvider extends StatelessWidget {
       create: (context) => PartnerSettingsBloc(
         context.read<PartnerSettingsRepository>(),
       ),
+      child: child,
+    );
+  }
+}
+
+class StoriesPageProvider extends StatelessWidget {
+  const StoriesPageProvider({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (context) => StoriesNotifier(),
       child: child,
     );
   }

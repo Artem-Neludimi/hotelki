@@ -104,7 +104,7 @@ class _HomeBody extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemCount: state.activeCategoriesString.length,
                   separatorBuilder: (context, index) => const Gap(4),
-                  itemBuilder: (context, index) => CategoryItem(title: state.activeCategoriesString[index]),
+                  itemBuilder: (context, index) => CategoryItem(index: index),
                 ),
               ),
               const Gap(16),

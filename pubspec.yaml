@@ -33,6 +33,7 @@ dependencies:
   firebase_storage: ^11.4.1
   flutter_image_compress: ^2.1.0
   path: ^1.8.3
+  story_view: ^0.15.0
 
 dev_dependencies:
   build_runner: ^2.3.3

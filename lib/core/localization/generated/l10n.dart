@@ -279,6 +279,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Ссылка`
+  String get link {
+    return Intl.message(
+      'Ссылка',
+      name: 'link',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

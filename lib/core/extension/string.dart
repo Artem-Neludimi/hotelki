@@ -4,4 +4,8 @@ extension StringExtension on String {
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
     ).hasMatch(this);
   }
+
+  bool isValidUrl() {
+    return Uri.parse(this).isAbsolute;
+  }
 }

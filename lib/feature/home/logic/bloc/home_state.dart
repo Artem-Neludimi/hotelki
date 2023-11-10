@@ -22,6 +22,20 @@ sealed class HomeState {
     if (total == 0) return null;
     return done / total;
   }
+
+  List<CategoryStoryData> buildCategoryStories(String category) {
+    final List<HotelkaModel> hotelkiWithCategory = hotelki.where((item) => item.category == category).toList();
+    return [
+      for (var hotelka in hotelkiWithCategory)
+        CategoryStoryData(
+          name: hotelka.name,
+          description: hotelka.description,
+          link: hotelka.references?.link ?? '',
+          isImportant: hotelka.isImportant,
+          imageUrls: hotelka.references?.imageUrls ?? [FirebaseLinks.coolBackground],
+        ),
+    ];
+  }
 }
 
 final class HomeInitial extends HomeState {

@@ -9,6 +9,7 @@ enum AppRoute {
   profile('/profile'),
   creatingHotelka('/creating-hotelka'),
   partnerSettings('/partner-settings'),
+  stories('/stories'),
   ;
 
   const AppRoute(this.path);
