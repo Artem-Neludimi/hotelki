@@ -26,7 +26,6 @@ class _PartnerSettingsPageState extends State<PartnerSettingsPage> {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         AppRoute.auth.go(context);
       });
-      AppRoute.auth.go(context);
     } else {
       context.read<PartnerSettingsBloc>().add(StartedEventPartnerSettings(widget.linkEmail, user));
     }
@@ -61,7 +60,7 @@ class _PartnerSettingsBody extends StatelessWidget {
     return BlocBuilder<PartnerSettingsBloc, PartnerSettingsState>(
       builder: (context, state) {
         if (state is PartnerSettingsLoading) return const Center(child: CircularProgressIndicator.adaptive());
-        if (state.partnerEmail != null) return Center(child: Text(state.partnerEmail!));
+        if (user.partnerEmail != null) return Center(child: Text(user.partnerEmail!));
 
         return Center(
           child: Column(

@@ -105,7 +105,7 @@ class _AuthPageState extends State<AuthPage> {
 
     context.closeKeyboard();
 
-    final email = _emailController.text.trim();
+    final email = _emailController.text.toLowerCase().trim();
     final password = _passwordController.text.trim();
 
     if (_isSignUp) {

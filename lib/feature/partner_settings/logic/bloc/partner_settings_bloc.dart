@@ -25,9 +25,9 @@ class PartnerSettingsBloc extends Bloc<PartnerSettingsEvent, PartnerSettingsStat
       emit(const PartnerSettingsLoading());
       if (event.linkEmail != null && event.linkEmail != event.user.email && event.user.partnerEmail == null) {
         await _repository.boundAccounts(event.linkEmail!, event.user.email);
-        emit(PartnerSettingsLoaded(event.linkEmail));
+        emit(const PartnerSettingsLoaded());
       } else {
-        emit(PartnerSettingsLoaded(event.user.partnerEmail));
+        emit(const PartnerSettingsLoaded());
       }
     } catch (e) {
       emit(const PartnerSettingsError());

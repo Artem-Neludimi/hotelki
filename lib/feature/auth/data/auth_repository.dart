@@ -7,11 +7,11 @@ import '../../../core/services/firebase/firestore/firebase_firestore_service.dar
 abstract interface class AuthRepository {
   Future<UserModel?> tryToSignIn();
 
-  Future<UserModel?> getCurrentUser(String email);
-
   Future<UserModel?> createUserWithEmailAndPassword(String email, String password);
 
   Future<UserModel?> signInWithEmailAndPassword(String email, String password);
+
+  Stream<UserModel> userStream(String email);
 
   Future<void> signOut();
 }
@@ -28,11 +28,6 @@ final class AuthRepositoryImpl with RepositoryLoggy implements AuthRepository {
     if (email == null) {
       return null;
     }
-    return _firebaseFirestoreService.getUserByEmail(email);
-  }
-
-  @override
-  Future<UserModel?> getCurrentUser(String email) async {
     return _firebaseFirestoreService.getUserByEmail(email);
   }
 
@@ -54,6 +49,11 @@ final class AuthRepositoryImpl with RepositoryLoggy implements AuthRepository {
       return null;
     }
     return _firebaseFirestoreService.getUserByEmail(userEmail);
+  }
+
+  @override
+  Stream<UserModel> userStream(String email) {
+    return _firebaseFirestoreService.userStream(email);
   }
 
   @override

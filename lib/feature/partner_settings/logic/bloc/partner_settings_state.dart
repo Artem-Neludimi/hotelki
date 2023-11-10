@@ -2,23 +2,21 @@ part of 'partner_settings_bloc.dart';
 
 @immutable
 sealed class PartnerSettingsState {
-  const PartnerSettingsState(this.partnerEmail);
-
-  final String? partnerEmail;
+  const PartnerSettingsState();
 }
 
 final class PartnerSettingsInitial extends PartnerSettingsState {
-  const PartnerSettingsInitial() : super(null);
+  const PartnerSettingsInitial();
 }
 
 final class PartnerSettingsLoading extends PartnerSettingsState {
-  const PartnerSettingsLoading() : super(null);
+  const PartnerSettingsLoading();
 }
 
 final class PartnerSettingsLoaded extends PartnerSettingsState {
-  const PartnerSettingsLoaded(super.partnerEmail);
+  const PartnerSettingsLoaded();
 }
 
 final class PartnerSettingsError extends PartnerSettingsState {
-  const PartnerSettingsError() : super(null);
+  const PartnerSettingsError();
 }

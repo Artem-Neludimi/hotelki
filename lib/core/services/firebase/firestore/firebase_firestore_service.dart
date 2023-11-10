@@ -12,6 +12,7 @@ part 'firestore_keys.dart';
 abstract interface class FirebaseFirestoreService {
   Future<UserModel?> getUserByEmail(String email);
   Future<UserModel?> createUser(String email);
+  Stream<UserModel> userStream(String email);
   Future<void> boundAccounts(String email, String partnerEmail);
   Future<Map<String, HotelkaModel>> getHotelkaModels(String email);
   Future<void> createHotelka(HotelkaModel hotelkaModel);
@@ -50,7 +51,7 @@ final class FirebaseFirestoreServiceImpl with ServiceLoggy implements FirebaseFi
       final querySnapshot = await userQuery.get();
       if (querySnapshot.docs.isEmpty) {
         await _firestore.runTransaction((transaction) async {
-          transaction.set(_users.doc(), UserModel(email: email).toJson());
+          transaction.set(_users.doc(email), UserModel(email: email).toJson());
           for (var category in DefaultCategories.buildCategories(email)) {
             transaction.set(_categories.doc(), category.toJson());
             loggy.info('category: ${category.toJson()}');
@@ -62,6 +63,20 @@ final class FirebaseFirestoreServiceImpl with ServiceLoggy implements FirebaseFi
       return UserModel.fromJson(userData);
     } catch (e, s) {
       loggy.error('getCurrentUser error', e, s);
+      rethrow;
+    }
+  }
+
+  @override
+  Stream<UserModel> userStream(String email) {
+    try {
+      final userQuery = _users.where(FirestoreKeys.email, isEqualTo: email);
+      return userQuery.snapshots().map((event) {
+        final userData = event.docs.first.data();
+        return UserModel.fromJson(userData);
+      });
+    } catch (e, s) {
+      loggy.error('userStream error', e, s);
       rethrow;
     }
   }
