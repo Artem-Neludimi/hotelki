@@ -7,7 +7,7 @@ import '../../../core/services/api/model/hotelka/hotelka_model.dart';
 import '../../../core/services/firebase/storage/firebase_storage_service.dart';
 
 abstract interface class HomeRepository {
-  Future<Map<String, HotelkaModel>> getHotelkaModels(String email);
+  Stream<Map<String, HotelkaModel>> streamHotelkaModels(String email);
   Future<void> createHotelka(HotelkaModel hotelkaModel, List<String> referencesImagesPaths);
   Future<void> updateHotelka(HotelkaModel hotelkaModel, String id);
   Future<List<CategoryModel>> getCategories(String partnerEmail);
@@ -20,8 +20,8 @@ class HomeRepositoryImpl implements HomeRepository {
   const HomeRepositoryImpl(this._firestore, this._firebaseStorage);
 
   @override
-  Future<Map<String, HotelkaModel>> getHotelkaModels(String email) {
-    return _firestore.getHotelkaModels(email);
+  Stream<Map<String, HotelkaModel>> streamHotelkaModels(String email) {
+    return _firestore.streamHotelkaModels(email);
   }
 
   @override

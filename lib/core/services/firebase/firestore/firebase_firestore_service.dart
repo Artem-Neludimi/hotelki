@@ -14,7 +14,7 @@ abstract interface class FirebaseFirestoreService {
   Future<UserModel?> createUser(String email);
   Stream<UserModel> userStream(String email);
   Future<void> boundAccounts(String email, String partnerEmail);
-  Future<Map<String, HotelkaModel>> getHotelkaModels(String email);
+  Stream<Map<String, HotelkaModel>> streamHotelkaModels(String email);
   Future<void> createHotelka(HotelkaModel hotelkaModel);
   Future<void> updateHotelka(HotelkaModel hotelkaModel, String id);
   Future<List<CategoryModel>> getCategories(String partnerEmail);
@@ -97,17 +97,14 @@ final class FirebaseFirestoreServiceImpl with ServiceLoggy implements FirebaseFi
   }
 
   @override
-  Future<Map<String, HotelkaModel>> getHotelkaModels(String email) async {
+  Stream<Map<String, HotelkaModel>> streamHotelkaModels(String email) {
     try {
       final hotelkaQuery = _hotelki.where(FirestoreKeys.email, isEqualTo: email);
-      final querySnapshot = await hotelkaQuery.get();
-
-      final hotelkaModels = <String, HotelkaModel>{};
-      for (var doc in querySnapshot.docs) {
-        hotelkaModels.addAll({doc.id: HotelkaModel.fromJson(doc.data())});
-      }
-
-      return hotelkaModels;
+      return hotelkaQuery.snapshots().map((event) {
+        final hotelkaModels = event.docs.map((doc) => HotelkaModel.fromJson(doc.data())).toList();
+        final hotelkaModelIds = event.docs.map((doc) => doc.id).toList();
+        return Map.fromIterables(hotelkaModelIds, hotelkaModels);
+      });
     } catch (e, s) {
       loggy.error('getHotelkaModels error', e, s);
       rethrow;

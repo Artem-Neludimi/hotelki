@@ -24,17 +24,26 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> with BlocLoggy {
       },
     );
   }
+
+  final List<CategoryModel> _categories = [];
+  List<CategoryModel> get categories => _categories;
+  List<String> get categoriesString => _categories.map((item) => item.category).toList();
+
   Future<void> _onStarted(Started event, Emitter<HomeState> emit) async {
     emit(const HomeInitial());
     if (event.user.partnerEmail == null) {
       return emit(const HomeNoPartner());
     }
     try {
-      final hotelki = await _repository.getHotelkaModels(event.user.email);
-      final categories = await _repository.getCategories(event.user.partnerEmail!);
-      loggy.info('hotelki: $hotelki');
-      loggy.info('categories: $categories');
-      emit(HomeLoaded(hotelki, categories));
+      final hotelkiStream = _repository.streamHotelkaModels(event.user.email);
+      _categories.clear();
+      _categories.addAll(await _repository.getCategories(event.user.partnerEmail!));
+      loggy.info('hotelki: $hotelkiStream');
+      loggy.info('categories: $_categories');
+      await emit.onEach(hotelkiStream, onData: (hotelki) {
+        loggy.info('hotelki: $hotelki');
+        emit(HomeLoaded(hotelki));
+      });
     } catch (e, s) {
       loggy.error(e, s);
       emit(HomeError(e.toString()));
@@ -42,19 +51,22 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> with BlocLoggy {
   }
 
   Future<void> _onHotelkaItemTap(OnHotelkaItemTap event, Emitter<HomeState> emit) async {
-    final hotelkaAndId = state.hotelkaAndIdByIndex(event.index);
-    await _repository.updateHotelka(hotelkaAndId.$2.copyWith(isDone: !hotelkaAndId.$2.isDone), hotelkaAndId.$1);
-    final hotelki = await _repository.getHotelkaModels(event.user.email);
-    final categories = await _repository.getCategories(event.user.partnerEmail!);
-    loggy.info('hotelki: $hotelki');
-    loggy.info('categories: $categories');
-    emit(HomeLoaded(hotelki, categories));
+    try {
+      final hotelkaAndId = state.hotelkaAndIdByIndex(event.index);
+      await _repository.updateHotelka(hotelkaAndId.$2.copyWith(isDone: !hotelkaAndId.$2.isDone), hotelkaAndId.$1);
+    } catch (e) {
+      loggy.error(e);
+      emit(HomeError(e.toString()));
+    }
   }
 
   Future<void> _createHotelka(CreateHotelka event, Emitter<HomeState> emit) async {
     try {
-      _repository.createHotelka(event.hotelkaModel, event.referencesImagesPaths);
+      await _repository.createHotelka(event.hotelkaModel, event.referencesImagesPaths);
+      _categories.clear();
+      _categories.addAll(await _repository.getCategories(event.hotelkaModel.email));
       loggy.info('hotelka create: ${event.hotelkaModel}');
+      loggy.info('categories: $_categories');
     } catch (e, s) {
       loggy.error(e, s);
       emit(HomeError(e.toString()));

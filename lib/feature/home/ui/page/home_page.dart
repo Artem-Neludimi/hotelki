@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final user = context.watch<AuthBloc>().state.user!;
+    final bloc = context.read<HomeBloc>();
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         return Scaffold(
@@ -48,7 +49,7 @@ class _HomePageState extends State<HomePage> {
               : FloatingActionButton(
                   onPressed: () => AppRoute.creatingHotelka.push(
                     context,
-                    extra: {"categories": state.categoriesString},
+                    extra: {"categories": bloc.categoriesString},
                   ).then((value) {
                     if (value is (HotelkaModel, List<String>)) {
                       context.read<HomeBloc>().add(CreateHotelka(value.$1, value.$2));

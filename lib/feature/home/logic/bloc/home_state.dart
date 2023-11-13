@@ -2,14 +2,11 @@ part of 'home_bloc.dart';
 
 @immutable
 sealed class HomeState {
-  const HomeState(this._hotelki, this._categories);
+  const HomeState(this._hotelki);
 
   final Map<String, HotelkaModel>? _hotelki;
-  final List<CategoryModel>? _categories;
 
   List<HotelkaModel> get hotelki => _hotelki!.values.toList();
-  List<CategoryModel> get categories => _categories!;
-  List<String> get categoriesString => _categories!.map((item) => item.category).toList();
   List<String> get activeCategoriesString => hotelki.map((item) => item.category).toSet().toList();
   (String, HotelkaModel) hotelkaAndIdByIndex(int index) {
     final hotelka = hotelki[index];
@@ -39,19 +36,19 @@ sealed class HomeState {
 }
 
 final class HomeInitial extends HomeState {
-  const HomeInitial() : super(null, null);
+  const HomeInitial() : super(null);
 }
 
 final class HomeLoaded extends HomeState {
-  const HomeLoaded(super.hotelkaItems, super._categories);
+  const HomeLoaded(super.hotelkaItems);
 }
 
 final class HomeNoPartner extends HomeState {
-  const HomeNoPartner() : super(null, null);
+  const HomeNoPartner() : super(null);
 }
 
 final class HomeError extends HomeState {
-  const HomeError(this.error) : super(null, null);
+  const HomeError(this.error) : super(null);
 
   final String error;
 }
