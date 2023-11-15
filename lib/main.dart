@@ -12,7 +12,7 @@ void _initLoggy() {
   Loggy.initLoggy(
     logOptions: const LogOptions(
       LogLevel.all,
-      stackTraceLevel: LogLevel.warning,
+      stackTraceLevel: LogLevel.warning, // hello
     ),
     logPrinter: const PrettyPrinter(),
   );
