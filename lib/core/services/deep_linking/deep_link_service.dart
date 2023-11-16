@@ -47,10 +47,17 @@ class DeepLinkServiceImpl with ServiceLoggy implements DeepLinkService {
 
   void _onDeepLinkListen(Uri? uri) async {
     loggy.info('got a new deep link - $uri');
-    final email = uri?.authority;
-    if (uri != null && email != null && email.isValidEmail()) {
-      _router.go(AppRoute.partnerSettings.path, extra: {'linkEmail': email});
+    if (uri != null) {
+      final email = _getEmailFromUrlLink(uri);
+      if (email.isValidEmail()) {
+        _router.go(AppRoute.partnerSettings.path, extra: {'linkEmail': email});
+      }
     }
+  }
+
+  String _getEmailFromUrlLink(Uri uri) {
+    final email = uri.path.replaceAll('/', '');
+    return email;
   }
 
   @override

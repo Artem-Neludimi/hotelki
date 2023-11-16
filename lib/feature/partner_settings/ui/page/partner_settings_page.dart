@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:scalable_flutter_app_starter/core/constant/app_constant.dart';
 import 'package:scalable_flutter_app_starter/core/extension/context.dart';
 import 'package:scalable_flutter_app_starter/core/navigation/route.dart';
 import 'package:scalable_flutter_app_starter/feature/partner_settings/logic/bloc/partner_settings_bloc.dart';
@@ -69,7 +70,7 @@ class _PartnerSettingsBody extends StatelessWidget {
               Text(S.of(context).sendToPartner),
               IconButton(
                 onPressed: () async {
-                  Clipboard.setData(ClipboardData(text: 'hotelki://${user.email}')).whenComplete(() {
+                  Clipboard.setData(ClipboardData(text: '${AppConstant.appLink}/${user.email}')).whenComplete(() {
                     context.showSnackBarMessage(S.of(context).linkCopied);
                   });
                 },
