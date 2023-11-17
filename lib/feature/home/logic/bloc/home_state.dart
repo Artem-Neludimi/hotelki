@@ -7,7 +7,13 @@ sealed class HomeState {
   final Map<String, HotelkaModel>? _hotelki;
 
   List<HotelkaModel> get hotelki => _hotelki!.values.toList();
-  List<String> get activeCategoriesString => hotelki.map((item) => item.category).toSet().toList();
+  List<String> get activeCategoriesString => hotelki
+      .where((element) =>
+          element.references != null && (element.references?.link != null && element.references!.link!.isNotEmpty) ||
+          (element.references?.imageUrls != null && element.references!.imageUrls!.isNotEmpty))
+      .map((item) => item.category)
+      .toSet()
+      .toList();
   (String, HotelkaModel) hotelkaAndIdByIndex(int index) {
     final hotelka = hotelki[index];
     return (_hotelki!.keys.toList()[index], hotelka);
