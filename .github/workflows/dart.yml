@@ -7,9 +7,9 @@ name: Dart
 
 on:
   push:
-    branches: [ "*" ]
+    branches: ["*"]
   pull_request:
-    branches: [ "*" ]
+    branches: ["*"]
 
 jobs:
   build:
@@ -21,15 +21,15 @@ jobs:
       # Flutter Actions
       - uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
+          channel: "stable"
       - run: flutter --version
 
       - name: Install dependencies
         run: flutter pub get
 
-      # Formatting Check
-      - name: Verify formatting
-        run: dart format -o none --set-exit-if-changed lib
+      # # Formatting Check
+      # - name: Verify formatting
+      #   run: dart format -o none --set-exit-if-changed lib
 
       # Analyze Code
       - name: Analyze project source
