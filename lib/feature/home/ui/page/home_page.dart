@@ -99,16 +99,18 @@ class _HomeBody extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 110,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: state.activeCategoriesString.length,
-                  separatorBuilder: (context, index) => const Gap(4),
-                  itemBuilder: (context, index) => CategoryItem(index: index),
+              if (state.activeCategoriesString.isNotEmpty) ...[
+                SizedBox(
+                  height: 110,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: state.activeCategoriesString.length,
+                    separatorBuilder: (context, index) => const Gap(4),
+                    itemBuilder: (context, index) => CategoryItem(index: index),
+                  ),
                 ),
-              ),
-              const Gap(16),
+                const Gap(16),
+              ],
               LinearProgressIndicator(
                 minHeight: 6,
                 value: state.percentHotelkaItemsDone,
