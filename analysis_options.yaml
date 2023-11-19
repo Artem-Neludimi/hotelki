@@ -11,9 +11,6 @@ linter:
     avoid_classes_with_only_static_members: false
 
 analyzer:
-  strong-mode:
-    # strict-casts: false
-    # strict-raw-dynamic: false
   language:
     strict-casts: true
     # strict-raw-types: true
